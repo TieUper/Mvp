@@ -1,6 +1,6 @@
 package com.example.administrator.mvp.common.injector.component;
 
-import com.example.administrator.mvp.MainActivity;
+import com.example.administrator.mvp.ui.home.imp.MainActivity;
 import com.example.administrator.mvp.common.injector.module.ActivityModule;
 import com.example.administrator.mvp.common.injector.module.PerActivity;
 

@@ -13,11 +13,15 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
  */
 public abstract class BaseActivity extends RxAppCompatActivity {
 
+
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+        setContentView(getLayoutResID());
         //初始化Dagger2
         initDagger2();
+        //初始化UI
+        initUI();
     }
 
     private void initDagger2() {
@@ -33,4 +37,16 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 注入
      */
     protected abstract void inject(ActivityComponent activityComponent);
+
+    /**
+     * 初始化
+     */
+    protected abstract void initUI();
+
+    /**
+     * getContentView ID
+     *
+     * @return  布局的id
+     */
+    protected abstract int getLayoutResID();
 }
