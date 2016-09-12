@@ -49,5 +49,5 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     //butterknife
-    compile 'com.jakewharton:butterknife-parent:7.0.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
 }

@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager;
 import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.common.base.BaseActivity;
 import com.example.administrator.mvp.common.injector.component.ActivityComponent;
-import com.example.administrator.mvp.fragment.BaseFragment;
+import com.example.administrator.mvp.common.base.BaseFragment;
 import com.example.administrator.mvp.ui.home.IMainActivity;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -34,7 +34,6 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         //得到一个集合
         FragmentPagerItems pagerItems = creator.create();
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pagerItems);
-        viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(adapter);
         viewpagerTab.setOnPageChangeListener(this);
 
