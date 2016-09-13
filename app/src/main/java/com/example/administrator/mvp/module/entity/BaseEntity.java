@@ -1,4 +1,4 @@
-package com.example.administrator.mvp.data.entity;
+package com.example.administrator.mvp.module.entity;
 
 /**
  * Created by tie on 2016/9/6.

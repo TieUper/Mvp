@@ -23,12 +23,12 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment{
 
     @Override
     protected void initUI() {
+
     }
 
     @Override
     protected View initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home,container,false);
     }
-
 
 }

@@ -1,13 +1,14 @@
 package com.example.administrator.mvp.common.injector.module;
 
-import com.example.administrator.mvp.data.api.ApiHomeService;
+import com.example.administrator.mvp.common.interceptor.RequestParamInterceptor;
+import com.example.administrator.mvp.common.utils.ImageLoader;
+import com.example.administrator.mvp.module.api.ApiHomeService;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -21,18 +22,19 @@ public class ApiModule {
     /**
      * 根地址
      */
-    private static final String ENDPOINT = "";
+    private static final String ENDPOINT = "http://api.tongmedia.com.hk";
 
     private final Retrofit retrofit;
 
     public ApiModule() {
-        //日志拦截器 打印网络请求日志
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        RequestParamInterceptor requestParamInterceptor = new RequestParamInterceptor();
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-//                .addNetworkInterceptor(requestParamInterceptor)
+                //.addInterceptor(loggingInterceptor)
+                .addNetworkInterceptor(requestParamInterceptor)
                 .build();
 
         retrofit = new Retrofit.Builder()
@@ -47,6 +49,12 @@ public class ApiModule {
     @Singleton
     ApiHomeService provideHomeService() {
         return retrofit.create(ApiHomeService.class);
+    }
+
+    @Provides
+    @Singleton
+    ImageLoader provideImageLoader() {
+        return new ImageLoader();
     }
 
 }

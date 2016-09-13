@@ -1,11 +1,11 @@
 package com.example.administrator.mvp.common.base;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 
 import com.example.administrator.mvp.common.injector.component.ActivityComponent;
 import com.example.administrator.mvp.common.injector.component.DaggerActivityComponent;
 import com.example.administrator.mvp.common.injector.module.ActivityModule;
+import com.example.administrator.mvp.common.widget.LoadingDialog;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 /**
@@ -13,10 +13,13 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
  */
 public abstract class BaseActivity extends RxAppCompatActivity {
 
+    //加载Dialog
+    private LoadingDialog mLoadingDialog;
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(getLayoutResID());
         //初始化Dagger2
         initDagger2();
@@ -49,4 +52,23 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @return  布局的id
      */
     protected abstract int getLayoutResID();
+
+    /**
+     * 显示加载Dialog
+     */
+    public void showLoadingDialog() {
+        if(mLoadingDialog == null) {
+            mLoadingDialog = new LoadingDialog(this);
+        }
+
+        if(!mLoadingDialog.isShowing()) {
+            mLoadingDialog.show();
+        }
+    }
+
+    public void dismissLoadingDialog() {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
+    }
 }

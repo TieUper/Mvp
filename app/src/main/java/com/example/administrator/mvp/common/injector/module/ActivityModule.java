@@ -22,4 +22,11 @@ public class ActivityModule {
     RxAppCompatActivity provideRxAppCompatActivity() {
         return mActivity;
     }
+
+//    @Provides
+//    @PerActivity
+//    @ContextLife(value = "Activity")
+//    Context provideContext() {
+//        return mActivity;
+//    }
 }
