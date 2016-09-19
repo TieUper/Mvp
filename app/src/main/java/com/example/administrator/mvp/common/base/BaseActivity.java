@@ -1,6 +1,8 @@
 package com.example.administrator.mvp.common.base;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.administrator.mvp.common.injector.component.ActivityComponent;
 import com.example.administrator.mvp.common.injector.component.DaggerActivityComponent;
@@ -35,6 +37,24 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
         inject(activityComponent);
     }
+
+    protected void setToolBar(Toolbar toolbar, String title) {
+        toolbar.setTitle(title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressedSupport();
+            }
+        });
+    }
+
+    /**
+     * 返回键
+     */
+    protected abstract void onBackPressedSupport();
 
     /**
      * 注入

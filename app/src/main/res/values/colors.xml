@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="app_text_color">#333333</color>
     <color name="app_color_blue">#24adfd</color>
+    <color name="drawer_header_text">#2c2c2c</color>
+    <color name="drawer_item_bg_p">#e8e8e8</color>
+    <color name="drawer_item_bg_n">#fffff9</color>
 </resources>

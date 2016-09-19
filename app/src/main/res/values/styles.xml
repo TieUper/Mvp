@@ -1,21 +1,29 @@
 <resources>
 
-    <!--样式基类-->
-    <style name="BaseAppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@android:color/black</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="colorControlNormal">@android:color/white</item>
-        <item name="actionMenuTextColor">@android:color/black</item>
+        <item name="actionMenuTextColor">#ffffff</item>
 
+        //沉浸状态栏
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
+        //ActionBarDrawerToggle设置颜色
+        <item name="colorControlNormal">@android:color/white</item>
     </style>
 
-    <style name="AppTheme" parent="BaseAppTheme">
-        <item name="android:colorBackground">@color/background_material_light</item>
-        <item name="android:colorForeground">@color/foreground_material_light</item>
-        <!--<item name="android:windowBackground">@color/xzk_white</item>-->
+    <style name="TextAppearance.ExpandedTitle"
+           parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
     <!--加载框-->

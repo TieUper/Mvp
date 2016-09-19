@@ -1,17 +1,19 @@
 package com.example.administrator.mvp.presenter.splash.imp;
 
-import com.example.administrator.mvp.module.api.ApiHomeService;
+import com.example.administrator.mvp.common.utils.RxUtil;
+import com.example.administrator.mvp.model.api.ApiZhihuService;
+import com.example.administrator.mvp.model.entity.WelcomeBean;
 import com.example.administrator.mvp.presenter.splash.SplashPresenter;
 import com.example.administrator.mvp.ui.IView;
 import com.example.administrator.mvp.ui.splash.ISplashActivity;
 import com.trello.rxlifecycle.ActivityEvent;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import rx.Observable;
 
 /**
  * Created by tie on 2016/9/13.
@@ -22,8 +24,12 @@ public class SplashPresenterImp implements SplashPresenter {
 
     private ISplashActivity mISplashActivity;
 
+    private static final String RES = "1080*1776";
+
+    private static final int COUNT_DOWN_TIME = 2200;
+
     @Inject
-    ApiHomeService mApiHomeService;
+    ApiZhihuService mApiZhihuService;
 
     @Inject
     public SplashPresenterImp(RxAppCompatActivity activity) {
@@ -42,25 +48,28 @@ public class SplashPresenterImp implements SplashPresenter {
 
     @Override
     public void getSplashData() {
-        mApiHomeService.get("zhangsan","abcdefghijklmn")
-                .compose(mActivity.bindUntilEvent(ActivityEvent.DESTROY))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Object>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(Object o) {
-
-                    }
+        mApiZhihuService.getWelcomeInfo(RES)
+                .compose(mActivity.<WelcomeBean>bindUntilEvent(ActivityEvent.DESTROY))
+                .compose(RxUtil.<WelcomeBean>rxSchedulerHelper())
+                .subscribe(welcomeBean -> {
+                    mISplashActivity.showContent(welcomeBean);
+                    startCountDown();
+                }, throwable -> {
+//                        mView.showError("");
+                    mISplashActivity.jumpToMain();
                 });
+    }
+
+    /**
+     * 延时跳转
+     */
+    private void startCountDown() {
+        Observable.timer(COUNT_DOWN_TIME, TimeUnit.MILLISECONDS)
+                .compose(mActivity.<Long>bindUntilEvent(ActivityEvent.DESTROY))
+                .compose(RxUtil.<Long>rxSchedulerHelper())
+                .subscribe(aLong -> {
+                    mISplashActivity.jumpToMain();
+                });
+
     }
 }
