@@ -1,5 +1,8 @@
 package com.example.administrator.mvp.common.utils;
 
+import com.trello.rxlifecycle.ActivityEvent;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -14,12 +17,12 @@ public class RxUtil {
      * @param <T>
      * @return
      */
-    public static <T> Observable.Transformer<T, T> rxSchedulerHelper() {    //compose简化线程
+    public static <T> Observable.Transformer<T, T> rxSchedulerHelper(RxAppCompatActivity activity) {    //compose简化线程
         return new Observable.Transformer<T, T>() {
             @Override
             public Observable<T> call(Observable<T> observable) {
                 return observable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+                        .observeOn(AndroidSchedulers.mainThread()).compose(activity.bindUntilEvent(ActivityEvent.DESTROY));
             }
         };
     }

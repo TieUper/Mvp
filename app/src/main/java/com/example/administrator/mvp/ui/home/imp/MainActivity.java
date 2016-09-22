@@ -13,6 +13,7 @@ import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.common.base.BaseActivity;
 import com.example.administrator.mvp.common.injector.component.ActivityComponent;
 import com.example.administrator.mvp.fragment.home.imp.HomeTabFragment;
+import com.example.administrator.mvp.fragment.home.imp.RefreshFrgment;
 import com.example.administrator.mvp.presenter.home.imp.HomeActivityPresenterImp;
 import com.example.administrator.mvp.ui.home.IMainActivity;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -71,6 +72,9 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
 
             creator.add("测试", HomeTabFragment.class);
         }
+        for (int i = 0; i < 2; i++) {
+            creator.add("首页", RefreshFrgment.class);
+        }
         //得到一个集合
         FragmentPagerItems pagerItems = creator.create();
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pagerItems);
@@ -79,12 +83,7 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
 
         //viewpagerTab与viewPager连用
         mViewpagerTab.setViewPager(mViewpager);
-        mViewpagerTab.setOnTabClickListener(new SmartTabLayout.OnTabClickListener() {
-            @Override
-            public void onTabClicked(int position) {
-                mViewpager.setCurrentItem(position);
-            }
-        });
+        mViewpagerTab.setOnTabClickListener(position -> mViewpager.setCurrentItem(position));
     }
 
     private void init() {
@@ -93,34 +92,31 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         mDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mLastItem = mNavigation.getMenu().findItem(R.id.drawer_zhihu);
-        mNavigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.drawer_zhihu:
-                        break;
-                    case R.id.drawer_gank:
-                        break;
-                    case R.id.drawer_wechat:
-                        break;
-                    case R.id.drawer_setting:
-                        break;
-                    case R.id.drawer_like:
-                        break;
-                    case R.id.drawer_about:
-                        break;
-                }
-
-                if(mLastItem != null) {
-                    mLastItem.setChecked(false);
-                }
-                mLastItem = item;
-
-                item.setChecked(true);
-                mToolBar.setTitle(item.getTitle());
-                mDrawerLayout.closeDrawers();
-                return true;
+        mNavigation.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.drawer_zhihu:
+                    break;
+                case R.id.drawer_gank:
+                    break;
+                case R.id.drawer_wechat:
+                    break;
+                case R.id.drawer_setting:
+                    break;
+                case R.id.drawer_like:
+                    break;
+                case R.id.drawer_about:
+                    break;
             }
+
+            if(mLastItem != null) {
+                mLastItem.setChecked(false);
+            }
+            mLastItem = item;
+
+            item.setChecked(true);
+            mToolBar.setTitle(item.getTitle());
+            mDrawerLayout.closeDrawers();
+            return true;
         });
     }
 
