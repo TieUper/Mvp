@@ -1,0 +1,12 @@
+package com.example.administrator.mvp.presenter.fragment;
+
+import com.example.administrator.mvp.presenter.IPresenter;
+
+/**
+ * Created by tie on 2016/11/21.
+ */
+
+public interface HomeFragmentPresenter  extends IPresenter{
+
+    void getNews(String id);
+}

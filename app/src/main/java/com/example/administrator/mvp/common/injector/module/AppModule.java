@@ -1,6 +1,7 @@
 package com.example.administrator.mvp.common.injector.module;
 
 import com.example.administrator.mvp.common.base.MyApplication;
+import com.example.administrator.mvp.model.entity.RequestParam;
 
 import javax.inject.Singleton;
 
@@ -23,5 +24,11 @@ public class AppModule {
     @Singleton
     MyApplication provideMyApplication() {
         return mMyApplication;
+    }
+
+    @Provides
+    @Singleton
+    RequestParam provideRequestParams() {
+        return new RequestParam(mMyApplication);
     }
 }

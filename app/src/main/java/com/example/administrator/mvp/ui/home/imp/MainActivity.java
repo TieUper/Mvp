@@ -1,5 +1,6 @@
 package com.example.administrator.mvp.ui.home.imp;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -7,19 +8,22 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.common.base.BaseActivity;
 import com.example.administrator.mvp.common.injector.component.ActivityComponent;
 import com.example.administrator.mvp.fragment.home.imp.HomeTabFragment;
-import com.example.administrator.mvp.fragment.home.imp.RefreshFrgment;
+import com.example.administrator.mvp.model.entity.Category;
+import com.example.administrator.mvp.model.entity.CategoryEntity;
 import com.example.administrator.mvp.presenter.home.imp.HomeActivityPresenterImp;
 import com.example.administrator.mvp.ui.home.IMainActivity;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -65,25 +69,11 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
 
     @Override
     protected void initUI() {
+
+        mHomeActivityPresenterImp.getCategory();
+       // mHomeActivityPresenterImp.give();
         //初始化Toolbar和Drawer
         init();
-        FragmentPagerItems.Creator creator = FragmentPagerItems.with(this);
-        for (int i = 0; i < 10; i++) {
-
-            creator.add("测试", HomeTabFragment.class);
-        }
-        for (int i = 0; i < 2; i++) {
-            creator.add("首页", RefreshFrgment.class);
-        }
-        //得到一个集合
-        FragmentPagerItems pagerItems = creator.create();
-        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pagerItems);
-        mViewpager.setAdapter(adapter);
-        mViewpagerTab.setOnPageChangeListener(this);
-
-        //viewpagerTab与viewPager连用
-        mViewpagerTab.setViewPager(mViewpager);
-        mViewpagerTab.setOnTabClickListener(position -> mViewpager.setCurrentItem(position));
     }
 
     private void init() {
@@ -95,6 +85,8 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         mNavigation.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.drawer_zhihu:
+                    Intent intent = new Intent(MainActivity.this,CalendarActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.drawer_gank:
                     break;
@@ -134,12 +126,6 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         return R.layout.activity_main;
     }
 
-
-    @Override
-    public void register(String game) {
-        Toast.makeText(this, game, Toast.LENGTH_LONG).show();
-    }
-
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -161,4 +147,22 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public void showCategory(CategoryEntity categoryEntity) {
+        ArrayList<Category> list = categoryEntity.list;
+        FragmentPagerItems.Creator creator = FragmentPagerItems.with(this);
+        for (int i = 0; i < list.size(); i++) {
+            Category category = list.get(i);
+            creator.add(category.getCategory(), HomeTabFragment.class,new Bundler().putLong("id",category.getID()).get());
+        }
+        //得到一个集合
+        FragmentPagerItems pagerItems = creator.create();
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pagerItems);
+        mViewpager.setAdapter(adapter);
+        mViewpagerTab.setOnPageChangeListener(this);
+
+        //viewpagerTab与viewPager连用
+        mViewpagerTab.setViewPager(mViewpager);
+        mViewpagerTab.setOnTabClickListener(position -> mViewpager.setCurrentItem(position));
+    }
 }

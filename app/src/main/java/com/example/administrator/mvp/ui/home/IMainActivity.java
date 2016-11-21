@@ -1,5 +1,6 @@
 package com.example.administrator.mvp.ui.home;
 
+import com.example.administrator.mvp.model.entity.CategoryEntity;
 import com.example.administrator.mvp.ui.IView;
 
 /**
@@ -7,5 +8,5 @@ import com.example.administrator.mvp.ui.IView;
  */
 public interface IMainActivity extends IView{
 
-    void register(String game);
+    void showCategory(CategoryEntity categoryEntity);
 }

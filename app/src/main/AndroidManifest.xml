@@ -14,6 +14,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.home.imp.MainActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".ui.home.imp.CalendarActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".ui.splash.imp.SplashActiviy"
                   android:theme="@style/SplashTheme"
                   android:screenOrientation="portrait">

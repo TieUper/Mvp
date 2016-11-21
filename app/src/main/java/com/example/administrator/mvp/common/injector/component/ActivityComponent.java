@@ -2,6 +2,7 @@ package com.example.administrator.mvp.common.injector.component;
 
 import com.example.administrator.mvp.common.injector.module.ActivityModule;
 import com.example.administrator.mvp.common.injector.module.PerActivity;
+import com.example.administrator.mvp.ui.home.imp.CalendarActivity;
 import com.example.administrator.mvp.ui.home.imp.MainActivity;
 import com.example.administrator.mvp.ui.splash.imp.SplashActiviy;
 
@@ -14,7 +15,8 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class,modules = ActivityModule.class)
 public interface ActivityComponent {
 
-
     void inject(MainActivity mainActivity);
     void inject(SplashActiviy splashActiviy);
+
+    void inject(CalendarActivity calendarActivity);
 }

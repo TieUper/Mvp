@@ -8,4 +8,10 @@
     <color name="drawer_header_text">#2c2c2c</color>
     <color name="drawer_item_bg_p">#e8e8e8</color>
     <color name="drawer_item_bg_n">#fffff9</color>
+    <color name="bottom_text">#a9a9a9</color>
+    <color name="black_bg">#d0000000</color>
+    <color name="gray_bg_news">#dfdfdf</color>
+    <color name="accent_material_light">#159deb</color>
+    <color name="white">#fafafa</color>
+    <color name="xzk_app_uniform_blue_color">#159deb</color>
 </resources>

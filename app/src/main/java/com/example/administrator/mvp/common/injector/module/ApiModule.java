@@ -32,7 +32,7 @@ public class ApiModule {
         RequestParamInterceptor requestParamInterceptor = new RequestParamInterceptor();
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                //.addInterceptor(loggingInterceptor)
+                .addInterceptor(loggingInterceptor)
                 .addNetworkInterceptor(requestParamInterceptor)
                 .build();
 

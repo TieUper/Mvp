@@ -6,6 +6,7 @@ import com.example.administrator.mvp.common.injector.module.AppModule;
 import com.example.administrator.mvp.common.utils.ImageLoader;
 import com.example.administrator.mvp.model.api.ApiHomeService;
 import com.example.administrator.mvp.model.api.ApiZhihuService;
+import com.example.administrator.mvp.model.entity.RequestParam;
 
 import javax.inject.Singleton;
 
@@ -25,4 +26,6 @@ public interface AppComponent {
     ImageLoader getImageLoader();
 
     ApiZhihuService getApiZhihuService();
+
+    RequestParam getRequestParams();
 }

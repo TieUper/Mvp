@@ -12,7 +12,7 @@ import com.example.administrator.mvp.fragment.home.IRefreshFragment;
 public class RefreshFrgment extends BaseFragment implements IRefreshFragment {
     @Override
     public void inject(FragmentComponent fragmentComponent) {
-
+        fragmentComponent.inject(this);
     }
 
     @Override

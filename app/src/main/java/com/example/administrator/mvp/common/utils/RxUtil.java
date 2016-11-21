@@ -1,7 +1,9 @@
 package com.example.administrator.mvp.common.utils;
 
 import com.trello.rxlifecycle.ActivityEvent;
+import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle.components.support.RxFragment;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -23,6 +25,22 @@ public class RxUtil {
             public Observable<T> call(Observable<T> observable) {
                 return observable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).compose(activity.bindUntilEvent(ActivityEvent.DESTROY));
+            }
+        };
+    }
+
+
+    /**
+     * 统一线程处理
+     * @param <T>
+     * @return
+     */
+    public static <T> Observable.Transformer<T, T> rxSchedulerHelper(RxFragment fragment) {    //compose简化线程
+        return new Observable.Transformer<T, T>() {
+            @Override
+            public Observable<T> call(Observable<T> observable) {
+                return observable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()).compose(fragment.bindUntilEvent(FragmentEvent.DETACH));
             }
         };
     }

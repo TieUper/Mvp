@@ -7,5 +7,6 @@ import com.example.administrator.mvp.presenter.IPresenter;
  */
 public interface HomeActivityPresenter extends IPresenter {
 
-    void give();
+    void getCategory();
+
 }

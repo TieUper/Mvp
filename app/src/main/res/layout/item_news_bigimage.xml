@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_marginLeft="@dimen/news_margin"
+    android:layout_marginRight="@dimen/news_margin"
+    android:orientation="vertical">
+
+    <include layout="@layout/item_news_simple_image_info"/>
+
+</LinearLayout>

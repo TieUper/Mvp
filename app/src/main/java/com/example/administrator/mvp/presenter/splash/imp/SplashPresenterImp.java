@@ -2,11 +2,9 @@ package com.example.administrator.mvp.presenter.splash.imp;
 
 import com.example.administrator.mvp.common.utils.RxUtil;
 import com.example.administrator.mvp.model.api.ApiZhihuService;
-import com.example.administrator.mvp.model.entity.WelcomeBean;
 import com.example.administrator.mvp.presenter.splash.SplashPresenter;
 import com.example.administrator.mvp.ui.IView;
 import com.example.administrator.mvp.ui.splash.ISplashActivity;
-import com.trello.rxlifecycle.ActivityEvent;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -49,8 +47,7 @@ public class SplashPresenterImp implements SplashPresenter {
     @Override
     public void getSplashData() {
         mApiZhihuService.getWelcomeInfo(RES)
-                .compose(mActivity.<WelcomeBean>bindUntilEvent(ActivityEvent.DESTROY))
-                .compose(RxUtil.<WelcomeBean>rxSchedulerHelper())
+                .compose(RxUtil.rxSchedulerHelper(mActivity))
                 .subscribe(welcomeBean -> {
                     mISplashActivity.showContent(welcomeBean);
                     startCountDown();
@@ -65,8 +62,7 @@ public class SplashPresenterImp implements SplashPresenter {
      */
     private void startCountDown() {
         Observable.timer(COUNT_DOWN_TIME, TimeUnit.MILLISECONDS)
-                .compose(mActivity.<Long>bindUntilEvent(ActivityEvent.DESTROY))
-                .compose(RxUtil.<Long>rxSchedulerHelper())
+                .compose(RxUtil.<Long>rxSchedulerHelper(mActivity))
                 .subscribe(aLong -> {
                     mISplashActivity.jumpToMain();
                 });
