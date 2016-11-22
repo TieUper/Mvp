@@ -9,12 +9,11 @@ import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.adapter.home.NewsAdapter;
 import com.example.administrator.mvp.common.base.BaseFragment;
 import com.example.administrator.mvp.common.injector.component.FragmentComponent;
+import com.example.administrator.mvp.common.widget.refresh.XListView;
 import com.example.administrator.mvp.fragment.home.IHomeTabFragment;
 import com.example.administrator.mvp.model.entity.News;
 import com.example.administrator.mvp.model.entity.NewsEntity;
 import com.example.administrator.mvp.presenter.fragment.imp.HomeFragmentPresenterImp;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +26,10 @@ import butterknife.ButterKnife;
 /**
  * Created by tie on 2016/9/12.
  */
-public class HomeTabFragment extends BaseFragment implements IHomeTabFragment,PullToRefreshBase.OnRefreshListener2 {
+public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, XListView.IXListViewListener {
 
-    @Bind(R.id.listView)
-    PullToRefreshListView mListView;
+    @Bind(R.id.list_view)
+    XListView mListView;
 
     @Inject
     HomeFragmentPresenterImp mPresenterImp;
@@ -47,7 +46,9 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment,Pu
 
     @Override
     protected void initUI() {
-        mListView.setOnRefreshListener(this);
+        //mListView.setOnRefreshListener(this);
+
+        refreshListener();
 
         mId = getArguments().getLong("id");
 
@@ -55,9 +56,17 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment,Pu
         mListView.setAdapter(mAdapter);
     }
 
+    private void refreshListener() {
+        mListView.setPullRefreshEnable(true);
+        mListView.setPullLoadEnable(true);
+        mListView.setAutoLoadEnable(true);
+        mListView.setXListViewListener(this);
+    }
+
     @Override
     public void fetchData() {
         //访问网络
+        mListView.autoRefresh();
     }
 
     @Override
@@ -77,15 +86,6 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment,Pu
         return rootView;
     }
 
-    @Override
-    public void onPullDownToRefresh(PullToRefreshBase refreshView) {
-        mPresenterImp.getNews(String.valueOf(mId));
-    }
-
-    @Override
-    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-
-    }
 
     @Override
     public void showNews(NewsEntity newsEntity) {
@@ -96,12 +96,12 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment,Pu
 
     @Override
     public void refreshComplete() {
-        mListView.onRefreshComplete();
+
     }
 
     @Override
     public void showError() {
-        mListView.onRefreshComplete();
+
     }
 
     @Override
@@ -111,6 +111,16 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment,Pu
 
     @Override
     public void dismissLoadingDialog() {
+
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenterImp.getNews(String.valueOf(mId));
+    }
+
+    @Override
+    public void onLoadMore() {
 
     }
 }

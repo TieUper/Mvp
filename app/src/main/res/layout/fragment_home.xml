@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.handmark.pulltorefresh.library.PullToRefreshListView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                          xmlns:pull_to_refresh="http://schemas.android.com/apk/res-auto"
-                                                          android:id="@+id/listView"
-                                                          android:layout_width="match_parent"
-                                                          android:layout_height="match_parent"
-                                                          android:cacheColorHint="@android:color/transparent"
-                                                          android:divider="@null"
-                                                          android:dividerHeight="0dp"
-                                                          android:footerDividersEnabled="false"
-                                                          android:headerDividersEnabled="false"
-                                                          android:paddingTop="0dp"
-                                                          android:scrollbars="none"
-                                                          pull_to_refresh:ptrAnimationStyle="rotate"
-                                                          pull_to_refresh:ptrMode="both"
-                                                          pull_to_refresh:ptrOverScroll="false"
-                                                          pull_to_refresh:ptrShowIndicator="false"/>
+<com.example.administrator.mvp.common.widget.refresh.XListView
+    android:id="@+id/list_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"/>

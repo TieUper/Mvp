@@ -41,4 +41,12 @@
     <string name="about_project">项目简介:\n极客日报,一个纯粹的阅读App\n为了熟悉当前Android端主流框架的使用,也为了能有一款将新闻、技术文章、福利一网打尽的简洁的阅读应用,利用闲暇时间做了这个项目n(*≧▽≦*)n\n
         本着学习的目的,该项目会持续迭代与优化,加入更丰富的阅读内容与功能,并不断尝试最新的技术,欢迎star、fork、issue、email</string>
     <string name="about_info">GeekNews\t\t\tV1.0.0</string>
+
+    <!--refresh-->
+    <string name="header_hint_refresh_normal">Pull to refresh</string>
+    <string name="header_hint_refresh_ready">Release to refresh</string>
+    <string name="header_hint_refresh_loading">Refreshing&#8230;</string>
+    <string name="header_hint_refresh_time">Time：</string>
+    <string name="footer_hint_load_normal">Load more</string>
+    <string name="footer_hint_load_ready">Release to load more</string>
 </resources>

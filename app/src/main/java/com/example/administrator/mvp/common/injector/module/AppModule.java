@@ -1,6 +1,7 @@
 package com.example.administrator.mvp.common.injector.module;
 
 import com.example.administrator.mvp.common.base.MyApplication;
+import com.example.administrator.mvp.common.widget.refresh.MyRefreshUtils;
 import com.example.administrator.mvp.model.entity.RequestParam;
 
 import javax.inject.Singleton;
@@ -30,5 +31,11 @@ public class AppModule {
     @Singleton
     RequestParam provideRequestParams() {
         return new RequestParam(mMyApplication);
+    }
+
+    @Provides
+    @Singleton
+    MyRefreshUtils provideRefreshUtils() {
+        return new MyRefreshUtils(mMyApplication);
     }
 }
