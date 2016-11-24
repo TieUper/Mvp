@@ -38,6 +38,8 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, X
     private List<News> mNewsList = new ArrayList<>();
     private NewsAdapter mAdapter;
 
+    private int index = 1;
+
     @Override
     public void inject(FragmentComponent fragmentComponent) {
         fragmentComponent.inject(this);
@@ -58,7 +60,7 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, X
 
     private void refreshListener() {
         mListView.setPullRefreshEnable(true);
-        mListView.setPullLoadEnable(true);
+       // mListView.setPullLoadEnable(true);
         mListView.setAutoLoadEnable(true);
         mListView.setXListViewListener(this);
     }
@@ -92,16 +94,26 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, X
         mNewsList.clear();
         mNewsList.addAll(newsEntity.list);
         mAdapter.notifyDataSetChanged();
+        if (mNewsList.size() == 20) {
+            mListView.setPullLoadEnable(true);
+        }
+
     }
 
     @Override
     public void refreshComplete() {
-
+        mListView.stopRefresh();
     }
 
     @Override
     public void showError() {
+        mListView.stopRefresh();
+    }
 
+    @Override
+    public void showMore(NewsEntity newsEntity) {
+        mNewsList.addAll(newsEntity.list);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -121,6 +133,7 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, X
 
     @Override
     public void onLoadMore() {
-
+        index++;
+        mPresenterImp.getMoreNews(String.valueOf(mId),index);
     }
 }

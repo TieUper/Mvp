@@ -14,4 +14,9 @@ public interface IView {
      * 关闭加载项
      */
     void dismissLoadingDialog();
+
+    /**
+     *
+     */
+
 }

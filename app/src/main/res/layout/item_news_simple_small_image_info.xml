@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/news_margin"
         android:layout_marginRight="@dimen/news_margin"
+        android:background="@color/backgroundColor"
         >
 
         <include

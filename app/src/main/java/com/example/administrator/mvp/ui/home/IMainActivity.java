@@ -9,4 +9,8 @@ import com.example.administrator.mvp.ui.IView;
 public interface IMainActivity extends IView{
 
     void showCategory(CategoryEntity categoryEntity);
+    //夜间模式切换
+    void useNightMode(boolean isNight);
+    //切换失败
+    void showError(String message);
 }

@@ -6,6 +6,7 @@
     android:layout_centerHorizontal="true"
     android:layout_marginLeft="@dimen/news_margin"
     android:layout_marginRight="@dimen/news_margin"
+    android:background="@color/backgroundColor"
     android:orientation="vertical">
 
     <include layout="@layout/item_news_simple_image_info"/>

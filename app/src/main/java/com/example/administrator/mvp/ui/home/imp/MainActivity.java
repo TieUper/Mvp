@@ -17,6 +17,7 @@ import com.example.administrator.mvp.model.entity.Category;
 import com.example.administrator.mvp.model.entity.CategoryEntity;
 import com.example.administrator.mvp.presenter.home.imp.HomeActivityPresenterImp;
 import com.example.administrator.mvp.ui.home.IMainActivity;
+import com.example.administrator.mvp.ui.set.SettingActivity;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -93,6 +94,7 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
                 case R.id.drawer_wechat:
                     break;
                 case R.id.drawer_setting:
+                    startActivity(new Intent(MainActivity.this, SettingActivity.class));
                     break;
                 case R.id.drawer_like:
                     break;
@@ -164,5 +166,15 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         //viewpagerTab与viewPager连用
         mViewpagerTab.setViewPager(mViewpager);
         mViewpagerTab.setOnTabClickListener(position -> mViewpager.setCurrentItem(position));
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

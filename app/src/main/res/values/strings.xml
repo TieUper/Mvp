@@ -49,4 +49,5 @@
     <string name="header_hint_refresh_time">Time：</string>
     <string name="footer_hint_load_normal">Load more</string>
     <string name="footer_hint_load_ready">Release to load more</string>
+    <string name="ptr_demo_block_with_list_view_and_empty_view_tip">It\' empty. \n\nClick to load data.</string>
 </resources>

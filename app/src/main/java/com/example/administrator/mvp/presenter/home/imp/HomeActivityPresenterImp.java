@@ -48,6 +48,7 @@ public class HomeActivityPresenterImp implements HomeActivityPresenter{
     @Inject
     public HomeActivityPresenterImp(RxAppCompatActivity activity) {
         mActivity = activity;
+        //registerEvent();
     }
 
     @Override
@@ -84,4 +85,33 @@ public class HomeActivityPresenterImp implements HomeActivityPresenter{
                     }
                 });
     }
+
+
+//    public void registerEvent() {
+//
+//        RxBus.getDefault().toObservable(NightModeEvent.class)
+//                .compose(RxUtil.<NightModeEvent>rxSchedulerHelper(mActivity))
+//                .map(new Func1<NightModeEvent, Boolean>() {
+//                    @Override
+//                    public Boolean call(NightModeEvent nightModeEvent) {
+//                        return nightModeEvent.getNightMode();
+//                    }
+//                })
+//                .subscribe(new Observer<Boolean>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        mIMainActivity.showError("切换模式失败ヽ(≧Д≦)ノ");
+//                    }
+//
+//                    @Override
+//                    public void onNext(Boolean aBoolean) {
+//                        mIMainActivity.useNightMode(aBoolean);
+//                    }
+//                });
+//    }
 }

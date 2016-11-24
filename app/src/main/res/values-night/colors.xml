@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--背景-->
+    <color name="backgroundColor">#4d4d4d</color>
+    <color name="item_bg">#333333</color>
+    <color name="text_color">#b1b1b1</color>
+    <color name="colorBackground">#0F1010</color>
+    <color name="app_text_color">#b1b1b1</color>
+    <!--drawer-->
+    <color name="drawer_item_bg_p">#6b6d72</color>
+    <color name="drawer_item_bg_n">#303030</color>
+</resources>

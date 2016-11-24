@@ -14,4 +14,7 @@ public interface IHomeTabFragment extends IView{
 
     //刷新出错
     void showError();
+
+    //加载更多
+    void showMore(NewsEntity newsEntity);
 }
