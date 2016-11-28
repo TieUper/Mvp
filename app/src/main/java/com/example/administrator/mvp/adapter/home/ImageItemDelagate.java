@@ -10,6 +10,7 @@ import com.zhy.adapter.abslistview.ViewHolder;
 import com.zhy.adapter.abslistview.base.ItemViewDelegate;
 
 /**
+ * 大圖
  * Created by tie on 2016/11/21.
  */
 
@@ -49,5 +50,6 @@ public class ImageItemDelagate implements ItemViewDelegate<News>{
         //大图
          ImageView imageView =  holder.getView(R.id.iv_icon);
         ImageLoader.load(holder.getConvertView().getContext(), news.preview.body,imageView);
+        //Picasso.with(holder.getConvertView().getContext()).load(news.preview.body).into(imageView);
     }
 }

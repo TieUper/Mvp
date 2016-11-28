@@ -75,6 +75,8 @@ public class NewsImageAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         ImageLoader.load(context, url,viewHolder.gr_imageview);
+        //Picasso.with(context).load(url).resize(640, 320).centerCrop().into(viewHolder.gr_imageview);
+
 
         return convertView;
     }

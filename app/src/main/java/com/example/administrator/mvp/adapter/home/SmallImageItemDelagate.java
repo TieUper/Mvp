@@ -11,6 +11,7 @@ import com.zhy.adapter.abslistview.ViewHolder;
 import com.zhy.adapter.abslistview.base.ItemViewDelegate;
 
 /**
+ * 小圖模式
  * Created by tie on 2016/11/21.
  */
 

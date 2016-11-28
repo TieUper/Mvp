@@ -62,7 +62,7 @@ public class SplashPresenterImp implements SplashPresenter {
      */
     private void startCountDown() {
         Observable.timer(COUNT_DOWN_TIME, TimeUnit.MILLISECONDS)
-                .compose(RxUtil.<Long>rxSchedulerHelper(mActivity))
+                .compose(RxUtil.rxSchedulerHelper(mActivity))
                 .subscribe(aLong -> {
                     mISplashActivity.jumpToMain();
                 });

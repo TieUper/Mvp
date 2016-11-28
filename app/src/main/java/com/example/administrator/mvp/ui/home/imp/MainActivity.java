@@ -161,7 +161,7 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         switch (item) {
             case Constants.TYPE_MAIN:
                 return mHomeFragment;
-            case Constants.TYPE_GANK:
+            case Constants.TYPE_SETTING:
                 return mSettingFragment;
         }
         return mHomeFragment;

@@ -128,6 +128,34 @@ public class HomeFragmentPresenterImp implements HomeFragmentPresenter {
                 });
     }
 
+//    @Override
+//    public void getMoreNews(String id, int index) {
+//        Map<String, String> params = mRequestParam.addParam("NewsTypeCode", id)
+//                .addParam("PageSize", "20")
+//                .addParam("PageIndex", String.valueOf(index))
+//                .addParam("InCircle", "0")
+//                .getParams();
+//
+//        mApiHomeService.getNews(params)
+//                .compose(RxUtil.rxSchedulerHelper(mFragment))
+//                .subscribe(new Subscriber<NewsEntity>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        mIHomeTabFragment.refreshComplete();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        mIHomeTabFragment.showError();
+//                    }
+//
+//                    @Override
+//                    public void onNext(NewsEntity newsEntity) {
+//                        mIHomeTabFragment.showMoreNews(newsEntity);
+//                    }
+//                });
+//    }
+
     @Override
     public void attachView(IView iView) {
         mIHomeTabFragment = (IHomeTabFragment) iView;

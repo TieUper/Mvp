@@ -2,8 +2,10 @@ package com.example.administrator.mvp.common.injector.component;
 
 import com.example.administrator.mvp.common.injector.module.FragmentModule;
 import com.example.administrator.mvp.common.injector.module.PerFragment;
+import com.example.administrator.mvp.fragment.home.imp.HomeFragment;
 import com.example.administrator.mvp.fragment.home.imp.HomeTabFragment;
 import com.example.administrator.mvp.fragment.home.imp.RefreshFrgment;
+import com.example.administrator.mvp.ui.set.SettingFragment;
 
 import dagger.Component;
 
@@ -17,4 +19,8 @@ public interface FragmentComponent {
     void inject(HomeTabFragment homeTabFragment);
 
     void inject(RefreshFrgment refreshFrgment);
+
+    void inject(HomeFragment homeFragment);
+
+    void inject(SettingFragment settingFragment);
 }

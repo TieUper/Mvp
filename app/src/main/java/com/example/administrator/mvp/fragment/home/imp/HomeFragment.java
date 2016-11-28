@@ -37,17 +37,17 @@ public class HomeFragment extends BaseFragment implements IHomeFragment, ViewPag
 
     @Override
     public void inject(FragmentComponent fragmentComponent) {
-
+        fragmentComponent.inject(this);
     }
 
     @Override
     protected void initUI() {
-
+        mPresenter.getCategory();
     }
 
     @Override
     public void fetchData() {
-        mPresenter.getCategory();
+
     }
 
     @Override

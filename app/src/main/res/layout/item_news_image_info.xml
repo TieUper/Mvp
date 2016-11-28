@@ -12,6 +12,5 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_gravity="center"
-        android:background="@drawable/ic_news_img_placeholder"
         android:scaleType="fitXY"/>
 </LinearLayout>

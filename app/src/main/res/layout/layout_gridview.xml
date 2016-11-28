@@ -7,6 +7,5 @@
     android:id="@+id/gr_imageview"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:scaleType="fitXY"
-    android:background="@drawable/ic_news_img_placeholder"/>
+    android:scaleType="fitXY"/>
 </LinearLayout>

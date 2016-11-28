@@ -54,7 +54,7 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
 
     @Override
     public void inject(FragmentComponent fragmentComponent) {
-
+        fragmentComponent.inject(this);
     }
 
     @Override
