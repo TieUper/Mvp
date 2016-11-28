@@ -34,10 +34,6 @@ public class SplashActiviy extends BaseActivity implements ISplashActivity {
     @Bind(R.id.tv_welcome_author)
     TextView mTvWelcomeAuthor;
 
-    @Override
-    protected void onBackPressedSupport() {
-
-    }
 
     @Override
     protected void inject(ActivityComponent activityComponent) {

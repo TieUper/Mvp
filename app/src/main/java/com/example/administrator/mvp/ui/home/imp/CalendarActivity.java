@@ -33,10 +33,6 @@ public class CalendarActivity extends BaseActivity implements ICalendarActivity 
 
     CalendarDay mDate;
 
-    @Override
-    protected void onBackPressedSupport() {
-
-    }
 
     @Override
     protected void inject(ActivityComponent activityComponent) {

@@ -48,8 +48,8 @@ dependencies {
     compile 'com.google.dagger:dagger:2.0.2'
     provided 'javax.annotation:jsr250-api:1.0'
     //rxlifecycle
-    compile 'com.trello:rxlifecycle:0.5.0'
-    compile 'com.trello:rxlifecycle-components:0.5.0'
+   // compile 'com.trello:rxlifecycle:0.5.0'
+    //compile 'com.trello:rxlifecycle-components:0.5.0'
     //multidex
     compile 'com.android.support:multidex:1.0.1'
     //smarttablayout
@@ -75,4 +75,6 @@ dependencies {
     //adapter
     //    compile 'com.zhy:base-rvadapter:3.0.3'
     compile 'com.zhy:base-adapter:3.0.3'
+    //fragmentation
+    compile project(':fragmentation')
 }

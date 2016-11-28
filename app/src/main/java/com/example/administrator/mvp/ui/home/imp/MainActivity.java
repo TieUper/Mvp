@@ -1,6 +1,5 @@
 package com.example.administrator.mvp.ui.home.imp;
 
-import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -12,32 +11,22 @@ import android.view.MenuItem;
 import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.common.base.BaseActivity;
 import com.example.administrator.mvp.common.injector.component.ActivityComponent;
-import com.example.administrator.mvp.fragment.home.imp.HomeTabFragment;
-import com.example.administrator.mvp.model.entity.Category;
-import com.example.administrator.mvp.model.entity.CategoryEntity;
+import com.example.administrator.mvp.common.utils.Constants;
+import com.example.administrator.mvp.common.utils.DayNightHelper;
+import com.example.administrator.mvp.common.utils.SharedPreferenceUtil;
+import com.example.administrator.mvp.fragment.home.imp.HomeFragment;
 import com.example.administrator.mvp.presenter.home.imp.HomeActivityPresenterImp;
 import com.example.administrator.mvp.ui.home.IMainActivity;
-import com.example.administrator.mvp.ui.set.SettingActivity;
+import com.example.administrator.mvp.ui.set.SettingFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.yokeyword.fragmentation.SupportFragment;
 
 public class MainActivity extends BaseActivity implements IMainActivity, ViewPager.OnPageChangeListener {
-
-
-    @Bind(R.id.viewpagerTab)
-    SmartTabLayout mViewpagerTab;
-    @Bind(R.id.viewpager)
-    ViewPager mViewpager;
 
     @Inject
     HomeActivityPresenterImp mHomeActivityPresenterImp;
@@ -55,27 +44,36 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
     private MenuItem mLastItem;
 
     private MenuItem mSearchMenuItem;
+    private DayNightHelper mDayNightHelper;
 
-    @Override
-    protected void onBackPressedSupport() {
-        finish();
-    }
+    private HomeFragment mHomeFragment;
+    private SettingFragment mSettingFragment;
+
+    private int hideFragment = Constants.TYPE_MAIN;
+    private int showFragment = Constants.TYPE_MAIN;
+
 
     @Override
     protected void inject(ActivityComponent activityComponent) {
         ButterKnife.bind(this);
         activityComponent.inject(this);
-        mHomeActivityPresenterImp.attachView(this);
+        //mHomeActivityPresenterImp.attachView(this);
     }
 
     @Override
     protected void initUI() {
 
-        mHomeActivityPresenterImp.getCategory();
+        //mHomeActivityPresenterImp.getCategory();
        // mHomeActivityPresenterImp.give();
         //初始化Toolbar和Drawer
+
+        mHomeFragment = new HomeFragment();
+        mSettingFragment = new SettingFragment();
+
         init();
     }
+
+
 
     private void init() {
         setToolBar(mToolBar, "主页");
@@ -83,18 +81,18 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         mDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mLastItem = mNavigation.getMenu().findItem(R.id.drawer_zhihu);
+        loadMultipleRootFragment(R.id.fl_main_content,0,mHomeFragment,mSettingFragment);
         mNavigation.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.drawer_zhihu:
-                    Intent intent = new Intent(MainActivity.this,CalendarActivity.class);
-                    startActivity(intent);
+                    showFragment = Constants.TYPE_MAIN;
                     break;
                 case R.id.drawer_gank:
                     break;
                 case R.id.drawer_wechat:
                     break;
                 case R.id.drawer_setting:
-                    startActivity(new Intent(MainActivity.this, SettingActivity.class));
+                    showFragment = Constants.TYPE_SETTING;
                     break;
                 case R.id.drawer_like:
                     break;
@@ -108,8 +106,11 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
             mLastItem = item;
 
             item.setChecked(true);
+            SharedPreferenceUtil.setCurrentItem(showFragment);
             mToolBar.setTitle(item.getTitle());
             mDrawerLayout.closeDrawers();
+            showHideFragment(getTargetFragment(showFragment), getTargetFragment(hideFragment));
+            hideFragment = showFragment;
             return true;
         });
     }
@@ -149,32 +150,20 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public void showCategory(CategoryEntity categoryEntity) {
-        ArrayList<Category> list = categoryEntity.list;
-        FragmentPagerItems.Creator creator = FragmentPagerItems.with(this);
-        for (int i = 0; i < list.size(); i++) {
-            Category category = list.get(i);
-            creator.add(category.getCategory(), HomeTabFragment.class,new Bundler().putLong("id",category.getID()).get());
-        }
-        //得到一个集合
-        FragmentPagerItems pagerItems = creator.create();
-        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pagerItems);
-        mViewpager.setAdapter(adapter);
-        mViewpagerTab.setOnPageChangeListener(this);
 
-        //viewpagerTab与viewPager连用
-        mViewpagerTab.setViewPager(mViewpager);
-        mViewpagerTab.setOnTabClickListener(position -> mViewpager.setCurrentItem(position));
-    }
-
-    @Override
-    public void showError(String message) {
-
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    private SupportFragment getTargetFragment(int item) {
+        switch (item) {
+            case Constants.TYPE_MAIN:
+                return mHomeFragment;
+            case Constants.TYPE_GANK:
+                return mSettingFragment;
+        }
+        return mHomeFragment;
     }
 }

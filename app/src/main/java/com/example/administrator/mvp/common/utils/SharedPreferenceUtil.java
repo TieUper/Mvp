@@ -15,7 +15,7 @@ public class SharedPreferenceUtil {
     private static final boolean DEFAULT_NO_IMAGE = false;
     private static final boolean DEFAULT_AUTO_SAVE = true;
     private static final boolean DEFAULT_LIKE_POINT = false;
-    private static final int DEFAULT_CURRENT_ITEM = Constants.TYPE_ZHIHU;
+    private static final int DEFAULT_CURRENT_ITEM = Constants.TYPE_MAIN;
 
     private static final String SHAREDPREFERENCES_NAME = "my_sp";
 

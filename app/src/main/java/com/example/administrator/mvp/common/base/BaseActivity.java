@@ -1,38 +1,44 @@
 package com.example.administrator.mvp.common.base;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.common.injector.component.ActivityComponent;
 import com.example.administrator.mvp.common.injector.component.DaggerActivityComponent;
 import com.example.administrator.mvp.common.injector.module.ActivityModule;
-import com.example.administrator.mvp.common.utils.SharedPreferenceUtil;
+import com.example.administrator.mvp.common.utils.DayNightHelper;
 import com.example.administrator.mvp.common.widget.LoadingDialog;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * Created by tie on 2016/9/6.
  */
-public abstract class BaseActivity extends RxAppCompatActivity {
+public abstract class BaseActivity extends SupportActivity{
 
     //加载Dialog
     private LoadingDialog mLoadingDialog;
+    private DayNightHelper mDayNightHelper;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initData();
+        initTheme();
+
         setContentView(getLayoutResID());
         //初始化Dagger2
         initDagger2();
         //夜间模式
-        AppCompatDelegate.setDefaultNightMode(
-                SharedPreferenceUtil.getNightModeState() ?
-                        AppCompatDelegate.MODE_NIGHT_YES :
-                        AppCompatDelegate.MODE_NIGHT_NO);
+//        AppCompatDelegate.setDefaultNightMode(
+//                SharedPreferenceUtil.getNightModeState() ?
+//                        AppCompatDelegate.MODE_NIGHT_YES :
+//                        AppCompatDelegate.MODE_NIGHT_NO);
         //初始化UI
         initUI();
     }
@@ -46,6 +52,20 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         inject(activityComponent);
     }
 
+    private void initData() {
+        mDayNightHelper = new DayNightHelper(this);
+    }
+
+    private void initTheme() {
+        if (mDayNightHelper.isDay()) {
+            setTheme(R.style.DayTheme);
+        } else {
+            setTheme(R.style.NightTheme);
+        }
+    }
+
+
+
     protected void setToolBar(Toolbar toolbar, String title) {
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
@@ -58,11 +78,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             }
         });
     }
-
-    /**
-     * 返回键
-     */
-    protected abstract void onBackPressedSupport();
 
     /**
      * 注入
@@ -89,8 +104,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_NO);
         }
-
-        startActivity(new Intent(this,this.getClass()));
     }
 
     /**

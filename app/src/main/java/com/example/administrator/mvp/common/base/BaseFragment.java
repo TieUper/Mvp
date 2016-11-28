@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 import com.example.administrator.mvp.common.injector.component.DaggerFragmentComponent;
 import com.example.administrator.mvp.common.injector.component.FragmentComponent;
 import com.example.administrator.mvp.common.injector.module.FragmentModule;
-import com.trello.rxlifecycle.components.support.RxFragment;
 
 import butterknife.ButterKnife;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by tie on 2016/9/9.
  */
-public abstract class BaseFragment extends RxFragment {
+public abstract class BaseFragment extends SupportFragment {
 
     private View mRootView;
     private boolean isViewInitiated;

@@ -3,10 +3,8 @@ package com.example.administrator.mvp.presenter.home.imp;
 import android.content.Context;
 
 import com.example.administrator.mvp.common.injector.module.PerActivity;
-import com.example.administrator.mvp.common.utils.RxUtil;
 import com.example.administrator.mvp.fragment.home.IHomeTabFragment;
 import com.example.administrator.mvp.model.api.ApiHomeService;
-import com.example.administrator.mvp.model.entity.CategoryEntity;
 import com.example.administrator.mvp.model.entity.RequestParam;
 import com.example.administrator.mvp.presenter.home.HomeActivityPresenter;
 import com.example.administrator.mvp.ui.IView;
@@ -15,8 +13,6 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import javax.inject.Inject;
-
-import rx.Subscriber;
 
 /**
  * Created by tie on 2016/9/13.
@@ -49,11 +45,12 @@ public class HomeActivityPresenterImp implements HomeActivityPresenter{
     public HomeActivityPresenterImp(RxAppCompatActivity activity) {
         mActivity = activity;
         //registerEvent();
+        mIMainActivity = (IMainActivity) activity;
     }
 
     @Override
     public void attachView(IView iView) {
-        mIMainActivity  = (IMainActivity) iView;
+        //mIMainActivity  = (IMainActivity) iView;
     }
 
     @Override
@@ -65,25 +62,25 @@ public class HomeActivityPresenterImp implements HomeActivityPresenter{
 
     @Override
     public void getCategory() {
-
-        mApiHomeService.getCategory(mRequestParam.getParams())
-                .compose(RxUtil.rxSchedulerHelper(mActivity))
-                .subscribe(new Subscriber<CategoryEntity>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(CategoryEntity categoryEntity) {
-                        mIMainActivity.showCategory(categoryEntity);
-                    }
-                });
+//
+//        mApiHomeService.getCategory(mRequestParam.getParams())
+//                .compose(RxUtil.rxSchedulerHelper(mActivity))
+//                .subscribe(new Subscriber<CategoryEntity>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        System.out.println(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(CategoryEntity categoryEntity) {
+//                        mIMainActivity.showCategory(categoryEntity);
+//                    }
+//                });
     }
 
 

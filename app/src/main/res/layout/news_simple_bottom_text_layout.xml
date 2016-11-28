@@ -5,22 +5,6 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray_bg_news"
-        android:visibility="gone"/>
-
-
-    <Space
-        android:id="@+id/space_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:visibility="gone"
-        android:background="@color/gray_bg_news"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,13 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="标题卢萨卡的减肥路上看大家"
-            android:textColor="@color/text_color"
+            android:textColor="?clockTextColor"
             android:textSize="16sp"/>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:visibility="gone"/>
 
 
         <RelativeLayout
@@ -73,7 +53,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="5分钟前"
-                    android:textColor="@color/text_color"
+                    android:textColor="?clockTextColor"
                     android:textSize="10sp"/>
             </LinearLayout>
 

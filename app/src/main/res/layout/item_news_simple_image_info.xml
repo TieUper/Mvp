@@ -10,20 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@color/backgroundColor"
+        android:background="?attr/clockBackground"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/zhiku_text_top_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:visibility="gone">
-            <include layout="@layout/zhiku_head_item_info"/>
-        </LinearLayout>
 
         <LinearLayout
-
             android:id="@+id/layout_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,13 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <View
-            android:id="@+id/line2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/gray_bg_news"
-            android:visibility="gone"/>
     </LinearLayout>
 
 </RelativeLayout>

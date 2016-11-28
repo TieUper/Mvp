@@ -13,7 +13,7 @@ public class Constants {
 
     //================= TYPE ====================
 
-    public static final int TYPE_ZHIHU = 101;
+    public static final int TYPE_MAIN = 101;
 
     public static final int TYPE_ANDROID = 102;
 

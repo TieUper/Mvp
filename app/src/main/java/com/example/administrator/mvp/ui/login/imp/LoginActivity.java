@@ -8,10 +8,6 @@ import com.example.administrator.mvp.common.injector.component.ActivityComponent
  */
 public class LoginActivity extends BaseActivity{
 
-    @Override
-    protected void onBackPressedSupport() {
-
-    }
 
     @Override
     protected void inject(ActivityComponent activityComponent) {

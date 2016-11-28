@@ -60,7 +60,7 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, X
 
     private void refreshListener() {
         mListView.setPullRefreshEnable(true);
-       // mListView.setPullLoadEnable(true);
+        mListView.setPullLoadEnable(false);
         mListView.setAutoLoadEnable(true);
         mListView.setXListViewListener(this);
     }
