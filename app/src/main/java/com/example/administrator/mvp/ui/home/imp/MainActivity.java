@@ -1,5 +1,6 @@
 package com.example.administrator.mvp.ui.home.imp;
 
+import android.content.IntentFilter;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -7,9 +8,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.common.base.BaseActivity;
+import com.example.administrator.mvp.common.broadcast.SMSBroadcastReceiver;
 import com.example.administrator.mvp.common.injector.component.ActivityComponent;
 import com.example.administrator.mvp.common.utils.Constants;
 import com.example.administrator.mvp.common.utils.DayNightHelper;
@@ -52,6 +55,9 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
     private int hideFragment = Constants.TYPE_MAIN;
     private int showFragment = Constants.TYPE_MAIN;
 
+    private SMSBroadcastReceiver mSMSBroadcastReceiver;
+    private static final String ACTION = "android.provider.Telephony.SMS_RECEIVED";
+
 
     @Override
     protected void inject(ActivityComponent activityComponent) {
@@ -64,15 +70,34 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
     protected void initUI() {
 
         //mHomeActivityPresenterImp.getCategory();
-       // mHomeActivityPresenterImp.give();
+        // mHomeActivityPresenterImp.give();
         //初始化Toolbar和Drawer
 
         mHomeFragment = new HomeFragment();
         mSettingFragment = new SettingFragment();
 
         init();
+
+        initSmsBroadReceiver();
     }
 
+    private void initSmsBroadReceiver() {
+//生成广播处理
+        mSMSBroadcastReceiver = new SMSBroadcastReceiver();
+
+        //实例化过滤器并设置要过滤的广播
+        IntentFilter intentFilter = new IntentFilter(ACTION);
+        intentFilter.setPriority(Integer.MAX_VALUE);
+        //注册广播
+        this.registerReceiver(mSMSBroadcastReceiver, intentFilter);
+
+        mSMSBroadcastReceiver.setOnReceivedMessageListener(new SMSBroadcastReceiver.MessageListener() {
+            @Override
+            public void onReceived(String message) {
+                Toast.makeText(MainActivity.this,message,Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
 
     private void init() {
@@ -81,7 +106,7 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         mDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mLastItem = mNavigation.getMenu().findItem(R.id.drawer_zhihu);
-        loadMultipleRootFragment(R.id.fl_main_content,0,mHomeFragment,mSettingFragment);
+        loadMultipleRootFragment(R.id.fl_main_content, 0, mHomeFragment, mSettingFragment);
         mNavigation.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.drawer_zhihu:
@@ -100,7 +125,7 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
                     break;
             }
 
-            if(mLastItem != null) {
+            if (mLastItem != null) {
                 mLastItem.setChecked(false);
             }
             mLastItem = item;
@@ -148,8 +173,10 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-    }
+        //注销短信监听广播
+        this.unregisterReceiver(mSMSBroadcastReceiver);
 
+    }
 
 
     @Override
@@ -161,7 +188,7 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         switch (item) {
             case Constants.TYPE_MAIN:
                 return mHomeFragment;
-            case Constants.TYPE_GANK:
+            case Constants.TYPE_SETTING:
                 return mSettingFragment;
         }
         return mHomeFragment;
