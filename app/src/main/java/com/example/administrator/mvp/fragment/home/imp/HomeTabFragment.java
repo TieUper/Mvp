@@ -117,6 +117,32 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, X
     }
 
     @Override
+    public void useNightMode(boolean isNight) {
+
+//        TypedValue background = new TypedValue();//背景色
+//        TypedValue textColor = new TypedValue();//字体颜色
+//        Resources.Theme theme = getActivity().getTheme();
+//        theme.resolveAttribute(R.attr.clockBackground, background, true);
+//        theme.resolveAttribute(R.attr.clockTextColor, textColor, true);
+//
+//        int childCount = mListView.getChildCount();
+//        Resources resources = getResources();
+//        for (int childIndex = 0; childIndex < childCount; childIndex++) {
+//            ViewGroup childView = (ViewGroup) mListView.getChildAt(childIndex);
+//            if(childView != null) {
+//                childView.setBackgroundResource(background.resourceId);
+//                TextView title = (TextView) childView.findViewById(R.id.tv_title);
+//                if(title != null)
+//                title.setTextColor(resources.getColor(textColor.resourceId));
+//                TextView time = (TextView) childView.findViewById(R.id.tv_time);
+//                if(time != null)
+//                time.setTextColor(resources.getColor(textColor.resourceId));
+//            }
+//        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void showLoadingDialog() {
 
     }

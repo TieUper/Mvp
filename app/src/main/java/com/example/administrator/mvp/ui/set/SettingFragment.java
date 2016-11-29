@@ -18,11 +18,14 @@ import android.widget.TextView;
 import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.common.base.BaseFragment;
 import com.example.administrator.mvp.common.injector.component.FragmentComponent;
+import com.example.administrator.mvp.common.injector.component.RxBus;
 import com.example.administrator.mvp.common.utils.DayNightHelper;
 import com.example.administrator.mvp.common.utils.SharedPreferenceUtil;
 import com.example.administrator.mvp.model.entity.DayNight;
+import com.example.administrator.mvp.model.entity.NightModeEvent;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by tie on 2016/11/23.
@@ -47,7 +50,18 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
     @Bind(R.id.ll_setting_update)
     LinearLayout llSettingUpdate;
 
+    @Bind(R.id.ll_setting)
+    LinearLayout mLL;
+
     boolean isNull = true;
+    @Bind(R.id.text_normal)
+    TextView mTextNormal;
+    @Bind(R.id.ll_normal)
+    LinearLayout mCard1;
+    @Bind(R.id.text_other)
+    TextView mTextOther;
+    @Bind(R.id.ll_other)
+    LinearLayout mCard2;
 
     private DayNightHelper mDayNightHelper;
 
@@ -59,6 +73,8 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
 
     @Override
     protected void initUI() {
+
+        initData();
 
         cbSettingCache.setChecked(SharedPreferenceUtil.getAutoCacheState());
         cbSettingImage.setChecked(SharedPreferenceUtil.getNoImageState());
@@ -83,10 +99,10 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
         switch (buttonView.getId()) {
             case R.id.cb_setting_night:
                 if (isNull) {   //防止夜间模式MainActivity执行reCreate后重复调用
-                   SharedPreferenceUtil.setNightModeState(isChecked);
-//                    NightModeEvent event = new NightModeEvent();
-//                    event.setNightMode(isChecked);
-//                    RxBus.getDefault().post(event);
+                    SharedPreferenceUtil.setNightModeState(isChecked);
+                    NightModeEvent event = new NightModeEvent();
+                    event.setNightMode(isChecked);
+                    RxBus.getDefault().post(event);
 //                    useNightMode(isChecked);
                 }
                 changeThemeByZhiHu();
@@ -125,9 +141,9 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
      * 使用知乎的实现套路来切换夜间主题
      */
     private void changeThemeByZhiHu() {
-        //showAnimation();
+        showAnimation();
         toggleThemeSetting();
-        //refreshUI();
+        refreshUI();
     }
 
     /**
@@ -136,11 +152,23 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
     private void refreshUI() {
         TypedValue background = new TypedValue();//背景色
         TypedValue textColor = new TypedValue();//字体颜色
+        TypedValue settingBg = new TypedValue();//settingBgColor
+        TypedValue cardBg = new TypedValue();//CardViewBgColor
         Resources.Theme theme = getActivity().getTheme();
         theme.resolveAttribute(R.attr.clockBackground, background, true);
         theme.resolveAttribute(R.attr.clockTextColor, textColor, true);
+        theme.resolveAttribute(R.attr.settingBgColor, settingBg, true);
+        theme.resolveAttribute(R.attr.cardBgColor, cardBg, true);
 
-//        mHeaderLayout.setBackgroundResource(background.resourceId);
+
+        mLL.setBackgroundResource(settingBg.resourceId);
+
+        Resources resources = getResources();
+        mTextNormal.setTextColor(resources.getColor(textColor.resourceId));
+        mTextOther.setTextColor(resources.getColor(textColor.resourceId));
+
+        mCard1.setBackgroundResource(cardBg.resourceId);
+        mCard2.setBackgroundResource(cardBg.resourceId);
 //        for (RelativeLayout layout : mLayoutList) {
 //            layout.setBackgroundResource(background.resourceId);
 //        }
@@ -154,20 +182,6 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
 //        Resources resources = getResources();
 //        for (TextView textView : mTextViewList) {
 //            textView.setTextColor(resources.getColor(textColor.resourceId));
-//        }
-
-//        int childCount = mRecyclerView.getChildCount();
-//        for (int childIndex = 0; childIndex < childCount; childIndex++) {
-//            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
-//            childView.setBackgroundResource(background.resourceId);
-//            View infoLayout = childView.findViewById(R.id.info_layout);
-//            infoLayout.setBackgroundResource(background.resourceId);
-//            TextView nickName = (TextView) childView.findViewById(R.id.tv_nickname);
-//            nickName.setBackgroundResource(background.resourceId);
-//            nickName.setTextColor(resources.getColor(textColor.resourceId));
-//            TextView motto = (TextView) childView.findViewById(R.id.tv_motto);
-//            motto.setBackgroundResource(background.resourceId);
-//            motto.setTextColor(resources.getColor(textColor.resourceId));
 //        }
 
         //让 RecyclerView 缓存在 Pool 中的 Item 失效
@@ -266,5 +280,11 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
             bitmap = null;
         }
         return bitmap;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

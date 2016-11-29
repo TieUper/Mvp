@@ -1,6 +1,8 @@
 package com.example.administrator.mvp.fragment.home.imp;
 
+import android.content.res.Resources;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 
 import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.common.base.BaseFragment;
@@ -80,9 +82,13 @@ public class HomeFragment extends BaseFragment implements IHomeFragment, ViewPag
 
     }
 
+    //夜间模式
     @Override
     public void useNightMode(boolean isNight) {
-
+        TypedValue background = new TypedValue();//背景色
+        Resources.Theme theme = getActivity().getTheme();
+        theme.resolveAttribute(R.attr.clockBackground, background, true);
+        mViewpagerTab.setBackgroundResource(background.resourceId);
     }
 
     @Override

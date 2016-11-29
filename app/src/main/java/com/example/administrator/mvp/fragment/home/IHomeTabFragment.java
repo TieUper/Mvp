@@ -17,4 +17,7 @@ public interface IHomeTabFragment extends IView{
 
     //加载更多
     void showMore(NewsEntity newsEntity);
+
+    //夜间模式
+    void useNightMode(boolean isNight);
 }

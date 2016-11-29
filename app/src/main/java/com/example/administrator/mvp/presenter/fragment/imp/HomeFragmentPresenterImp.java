@@ -3,6 +3,7 @@ package com.example.administrator.mvp.presenter.fragment.imp;
 import android.content.Context;
 
 import com.example.administrator.mvp.common.injector.component.ContextLife;
+import com.example.administrator.mvp.common.injector.component.RxBus;
 import com.example.administrator.mvp.common.utils.MySubscriber;
 import com.example.administrator.mvp.common.utils.RxUtil;
 import com.example.administrator.mvp.fragment.home.IHomeFragment;
@@ -10,6 +11,7 @@ import com.example.administrator.mvp.fragment.home.IHomeTabFragment;
 import com.example.administrator.mvp.model.api.ApiHomeService;
 import com.example.administrator.mvp.model.entity.CategoryEntity;
 import com.example.administrator.mvp.model.entity.NewsEntity;
+import com.example.administrator.mvp.model.entity.NightModeEvent;
 import com.example.administrator.mvp.model.entity.RequestParam;
 import com.example.administrator.mvp.presenter.fragment.HomeFragmentPresenter;
 import com.example.administrator.mvp.ui.IView;
@@ -20,6 +22,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import rx.Subscriber;
+import rx.functions.Action1;
 
 /**
  * Created by tie on 2016/11/21.
@@ -43,6 +46,22 @@ public class HomeFragmentPresenterImp implements HomeFragmentPresenter {
     public HomeFragmentPresenterImp(@ContextLife(value = "Activity") Context context, RxFragment fragment) {
         mContext = context;
         mFragment = fragment;
+        register();
+    }
+
+    private void register() {
+        RxBus.getDefault().toObservable(NightModeEvent.class)
+                .compose(RxUtil.rxSchedulerHelper(mFragment))
+                .subscribe(new Action1<NightModeEvent>() {
+                    @Override
+                    public void call(NightModeEvent nightModeEvent) {
+                        if(mFragment instanceof IHomeFragment) {
+                            ((IHomeFragment) mFragment).useNightMode(nightModeEvent.getNightMode());
+                        }else {
+                            ((IHomeTabFragment) mFragment).useNightMode(nightModeEvent.getNightMode());
+                        }
+                    }
+                });
     }
 //
 //    @Override

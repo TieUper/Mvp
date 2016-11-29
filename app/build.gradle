@@ -70,7 +70,6 @@ dependencies {
     //widget
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.victor:lib:1.0.4'
-    compile 'in.srain.cube:ultra-ptr:1.0.11'
     compile 'com.prolificinteractive:material-calendarview:1.4.2'
     //adapter
     //    compile 'com.zhy:base-rvadapter:3.0.3'
