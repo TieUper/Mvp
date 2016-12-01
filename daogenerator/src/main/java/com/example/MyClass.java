@@ -4,6 +4,9 @@ import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Schema;
 
+/**
+ * 数据库实体生成generator
+ */
 public class MyClass {
 
     public static void main(String[] args) throws Exception {
