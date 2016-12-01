@@ -60,4 +60,7 @@ public class Constants {
     public static final String SP_CURRENT_ITEM = "current_item";
 
     public static final String SP_LIKE_POINT = "like_point";
+
+    //数据库名字
+    public static final String DB_NAME = "mvp_db";
 }

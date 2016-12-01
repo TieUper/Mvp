@@ -11,8 +11,8 @@ import com.example.administrator.mvp.common.base.BaseFragment;
 import com.example.administrator.mvp.common.injector.component.FragmentComponent;
 import com.example.administrator.mvp.common.widget.refresh.XListView;
 import com.example.administrator.mvp.fragment.home.IHomeTabFragment;
-import com.example.administrator.mvp.model.entity.News;
 import com.example.administrator.mvp.model.entity.NewsEntity;
+import com.example.administrator.mvp.model.greendao.News;
 import com.example.administrator.mvp.presenter.fragment.imp.HomeFragmentPresenterImp;
 
 import java.util.ArrayList;

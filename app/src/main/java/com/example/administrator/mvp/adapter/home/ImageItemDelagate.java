@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.common.utils.ImageLoader;
-import com.example.administrator.mvp.model.entity.News;
+import com.example.administrator.mvp.model.greendao.News;
 import com.zhy.adapter.abslistview.ViewHolder;
 import com.zhy.adapter.abslistview.base.ItemViewDelegate;
 
@@ -32,7 +32,7 @@ public class ImageItemDelagate implements ItemViewDelegate<News> {
 
     @Override
     public boolean isForViewType(News item, int position) {
-        return item.preview.type == PreviewsType.TYPE_IMAGE;
+        return item.getPreview().getType() == PreviewsType.TYPE_IMAGE;
     }
 
     @Override
@@ -50,11 +50,11 @@ public class ImageItemDelagate implements ItemViewDelegate<News> {
         ((TextView)holder.getView(R.id.tv_time)).setTextColor(resources.getColor(textColor.resourceId));
 
         //标题
-        holder.setText(R.id.tv_title, news.title);
+        holder.setText(R.id.tv_title, news.getTitle());
         //时间
-        holder.setText(R.id.tv_time, news.releseDate);
+        holder.setText(R.id.tv_time, news.getReleseDate());
         //是否是专题
-        String topicId = news.topicId;
+        String topicId = news.getTopicID();
         if ((!"0".equals(topicId)) && !TextUtils.isEmpty(topicId)) {
 //            holder.tv_zhuanti.setVisibility(View.VISIBLE);
             holder.setVisible(R.id.tv_zhuanti, true);
@@ -63,6 +63,6 @@ public class ImageItemDelagate implements ItemViewDelegate<News> {
         }
         //大图
         ImageView imageView = holder.getView(R.id.iv_icon);
-        ImageLoader.load(holder.getConvertView().getContext(), news.preview.body, imageView);
+        ImageLoader.load(holder.getConvertView().getContext(), news.getPreview().getBody(), imageView);
     }
 }

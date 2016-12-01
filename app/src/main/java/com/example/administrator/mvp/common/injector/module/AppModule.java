@@ -1,6 +1,7 @@
 package com.example.administrator.mvp.common.injector.module;
 
 import com.example.administrator.mvp.common.base.MyApplication;
+import com.example.administrator.mvp.common.utils.DbUtils;
 import com.example.administrator.mvp.common.widget.refresh.MyRefreshUtils;
 import com.example.administrator.mvp.model.entity.RequestParam;
 
@@ -37,5 +38,11 @@ public class AppModule {
     @Singleton
     MyRefreshUtils provideRefreshUtils() {
         return new MyRefreshUtils(mMyApplication);
+    }
+
+    @Provides
+    @Singleton
+    DbUtils provideDbUtils() {
+        return new DbUtils(mMyApplication);
     }
 }

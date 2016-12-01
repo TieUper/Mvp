@@ -3,6 +3,7 @@ package com.example.administrator.mvp.common.injector.component;
 import com.example.administrator.mvp.common.base.MyApplication;
 import com.example.administrator.mvp.common.injector.module.ApiModule;
 import com.example.administrator.mvp.common.injector.module.AppModule;
+import com.example.administrator.mvp.common.utils.DbUtils;
 import com.example.administrator.mvp.common.utils.ImageLoader;
 import com.example.administrator.mvp.common.widget.refresh.MyRefreshUtils;
 import com.example.administrator.mvp.model.api.ApiHomeService;
@@ -24,11 +25,16 @@ public interface AppComponent {
 
     ApiHomeService getApiHomeService();
 
+    //图片工具类
     ImageLoader getImageLoader();
 
     ApiZhihuService getApiZhihuService();
 
+    //参数工具类
     RequestParam getRequestParams();
 
     MyRefreshUtils getRefreshUtils();
+
+    //数据库工具类
+    DbUtils getDbUtils();
 }

@@ -65,17 +65,13 @@
 #java8 retrolambda
 -dontwarn java.lang.invoke.*
 
-#####################support.v4#####################
-#-libraryjars libs/android-support-v4.jar
-#-keep class android.support.v4.** { *; }
-#-dontwarn android.support.v4.**
-
 ####################fragmentation#####################
 -keep class me.yokeyword.fragmentation.** {*;}
 -dontwarn me.yokeyword.fragmentation.**
 
 # 保持哪些类不被混淆
 -keep class com.example.administrator.mvp.model.entity.** { *; } #实体类不参与混淆
+#-keep class com.example.administrator.mvp.model.greendao.** { *; } #实体类不参与混淆
 -keep class com.example.administrator.mvp.common.widget.** { *; } #自定义控件不参与混淆
 -keep public class * extends android.view
 -keep public class * extends android.app.Fragment
@@ -161,3 +157,24 @@
 -keep class android.support.design.widget.** { *; }
 -keep interface android.support.design.widget.** { *; }
 -dontwarn android.support.design.**
+
+# #  ######## greenDao混淆  ##########
+# # -------------------------------------------
+#-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+#public static java.lang.String TABLENAME;
+#}
+#-keep class **$Properties
+
+## If you do not use SQLCipher:
+#-dontwarn org.greenrobot.greendao.database.**
+## If you do not use Rx:
+#-dontwarn rx.**
+
+#green dao 2.0+
+-keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
+    public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+#green dao end
+
+

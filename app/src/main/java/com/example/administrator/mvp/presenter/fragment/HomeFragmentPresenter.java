@@ -13,4 +13,6 @@ public interface HomeFragmentPresenter  extends IPresenter{
     void getMoreNews(String id,int index);
     //获取目录
     void getCategory();
+    //数据库加载Category
+    void loadCategoryFromDb();
 }
