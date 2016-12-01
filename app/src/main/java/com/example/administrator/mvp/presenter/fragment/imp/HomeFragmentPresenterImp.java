@@ -80,7 +80,13 @@ public class HomeFragmentPresenterImp implements HomeFragmentPresenter {
                 .addParam("InCircle", "0")
                 .getParams();
         mApiHomeService.getNews(params)
-                .compose(RxUtil.rxSchedulerHelper(mFragment))
+                .compose(mFragment.bindUntilEvent(FragmentEvent.DETACH))
+                .subscribeOn(Schedulers.io())
+                .map(newsEntity -> {
+                    mDbUtils.saveNews(newsEntity.list,Long.getLong(id));
+                    return newsEntity;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MySubscriber<NewsEntity>(mContext) {
                     @Override
                     public void onResult(NewsEntity newsEntity) {
@@ -127,33 +133,20 @@ public class HomeFragmentPresenterImp implements HomeFragmentPresenter {
                 });
     }
 
-//    @Override
-//    public void getMoreNews(String id, int index) {
-//        Map<String, String> params = mRequestParam.addParam("NewsTypeCode", id)
-//                .addParam("PageSize", "20")
-//                .addParam("PageIndex", String.valueOf(index))
-//                .addParam("InCircle", "0")
-//                .getParams();
-//
-//        mApiHomeService.getNews(params)
-//                .compose(RxUtil.rxSchedulerHelper(mFragment))
-//                .subscribe(new Subscriber<NewsEntity>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        mIHomeTabFragment.refreshComplete();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        mIHomeTabFragment.showError();
-//                    }
-//
-//                    @Override
-//                    public void onNext(NewsEntity newsEntity) {
-//                        mIHomeTabFragment.showMoreNews(newsEntity);
-//                    }
-//                });
-//    }
+    /**
+     * 从数据库获取数据
+     * @param categoryId 类型id
+     */
+    public void getNewFromDB(Long categoryId) {
+        Observable.just(1)
+                .compose(mFragment.bindUntilEvent(FragmentEvent.DETACH))
+                .subscribeOn(Schedulers.io())
+                .map(o -> (NewsEntity) mDbUtils.getNews(categoryId))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mIHomeTabFragment::showNews);
+
+
+    }
 
     @Override
     public void attachView(IView iView) {

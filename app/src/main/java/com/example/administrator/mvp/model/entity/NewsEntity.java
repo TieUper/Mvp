@@ -3,7 +3,7 @@ package com.example.administrator.mvp.model.entity;
 import com.example.administrator.mvp.model.greendao.News;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 收藏页面新闻
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class NewsEntity extends BaseEntity {
     @SerializedName(value = "Content")
-    public ArrayList<News> list;
+    public List<News> list;
 
     @SerializedName(value = "NewsCount")
     public int newsCount;

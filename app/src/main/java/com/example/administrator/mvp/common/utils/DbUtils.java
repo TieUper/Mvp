@@ -4,10 +4,15 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 
+import com.example.administrator.mvp.model.entity.NewsEntity;
 import com.example.administrator.mvp.model.greendao.Category;
 import com.example.administrator.mvp.model.greendao.CategoryDao;
 import com.example.administrator.mvp.model.greendao.DaoMaster;
 import com.example.administrator.mvp.model.greendao.DaoSession;
+import com.example.administrator.mvp.model.greendao.News;
+import com.example.administrator.mvp.model.greendao.NewsDao;
+import com.example.administrator.mvp.model.greendao.Preview;
+import com.example.administrator.mvp.model.greendao.PreviewDao;
 
 import java.util.List;
 
@@ -49,8 +54,7 @@ public class DbUtils {
             return;
         }else{
             CategoryDao categoryDao = mDaoSession.getCategoryDao();
-            categoryDao.deleteAll();
-            categoryDao.insertInTx(list);
+            categoryDao.insertOrReplaceInTx(list);
         }
     }
 
@@ -62,4 +66,46 @@ public class DbUtils {
         CategoryDao categoryDao = mDaoSession.getCategoryDao();
         return categoryDao.queryBuilder().build().list();
     }
+
+    /**
+     *保存新闻
+     * @param list 新闻集合
+     * @param categoryId 类型id
+     */
+    public void saveNews(List<News> list,Long categoryId) {
+        if (list.size() == 0) {
+            return;
+        }else{
+            NewsDao newsDao = mDaoSession.getNewsDao();
+            PreviewDao previewDao = mDaoSession.getPreviewDao();
+            for (News news : list) {
+                news.setCategoryId(categoryId);
+                newsDao.insertOrReplace(news);
+                Preview preview = news.getPreview();
+                preview.setNewsID(news.getNewsID());
+                previewDao.insertOrReplace(preview);
+            }
+        }
+    }
+
+    /**
+     * 根据类型id获取新闻列表
+     * @param categoryId 频道id
+     * @return
+     */
+    public NewsEntity getNews(Long categoryId) {
+        NewsDao newsDao = mDaoSession.getNewsDao();
+        PreviewDao previewDao = mDaoSession.getPreviewDao();
+        List<News> list = newsDao.queryBuilder().where(NewsDao.Properties.CategoryId.eq(categoryId)).orderDesc(NewsDao.Properties.ReleseDate)
+                .limit(20).list();
+        for(News news : list){
+            Preview preview = previewDao.queryBuilder().where(PreviewDao.Properties.NewsID.eq(news.getNewsID())).unique();
+            news.setPreview(preview);
+        }
+        NewsEntity newsEntity = new NewsEntity();
+        newsEntity.list = list;
+        return newsEntity;
+    }
+
+
 }

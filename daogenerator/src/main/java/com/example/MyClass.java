@@ -14,7 +14,7 @@ public class MyClass {
 
         addCategory(schema);
         addNews(schema);
-        new DaoGenerator().generateAll(schema, "D:/AndroidStudio/workspace/Mvp/app/src/main/java/");
+        new DaoGenerator().generateAll(schema, "F:/StudioWorkSpace/MvpEx/app/src/main/java/");
 
 
     }
@@ -32,6 +32,7 @@ public class MyClass {
 
         news.addIdProperty();
         news.addStringProperty("NewsID").unique().notNull();
+        news.addLongProperty("CategoryId");
         news.addStringProperty("Title");
         news.addStringProperty("ReleseDate");
         news.addStringProperty("TopicID");
