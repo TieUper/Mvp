@@ -2,7 +2,7 @@ package com.example.administrator.mvp.adapter.home;
 
 import android.content.Context;
 
-import com.example.administrator.mvp.model.entity.News;
+import com.example.administrator.mvp.model.greendao.News;
 import com.zhy.adapter.abslistview.MultiItemTypeAdapter;
 
 import java.util.List;

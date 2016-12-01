@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.administrator.mvp.common.injector.component.ContextLife;
 import com.example.administrator.mvp.common.injector.component.RxBus;
+import com.example.administrator.mvp.common.utils.DbUtils;
 import com.example.administrator.mvp.common.utils.MySubscriber;
 import com.example.administrator.mvp.common.utils.RxUtil;
 import com.example.administrator.mvp.fragment.home.IHomeFragment;
@@ -15,14 +16,18 @@ import com.example.administrator.mvp.model.entity.NightModeEvent;
 import com.example.administrator.mvp.model.entity.RequestParam;
 import com.example.administrator.mvp.presenter.fragment.HomeFragmentPresenter;
 import com.example.administrator.mvp.ui.IView;
+import com.trello.rxlifecycle.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by tie on 2016/11/21.
@@ -41,6 +46,9 @@ public class HomeFragmentPresenterImp implements HomeFragmentPresenter {
 
     @Inject
     RequestParam mRequestParam;
+
+    @Inject
+    DbUtils mDbUtils;
 
     @Inject
     public HomeFragmentPresenterImp(@ContextLife(value = "Activity") Context context, RxFragment fragment) {
@@ -63,34 +71,6 @@ public class HomeFragmentPresenterImp implements HomeFragmentPresenter {
                     }
                 });
     }
-//
-//    @Override
-//    public void getNews(String id) {
-//        Map<String, String> params = mRequestParam.addParam("NewsTypeCode", id)
-//                .addParam("PageSize", "20")
-//                .addParam("PageIndex", "1")
-//                .addParam("InCircle", "0")
-//                .getParams();
-//        mApiHomeService.getNews(params)
-//                .compose(RxUtil.rxSchedulerHelper(mFragment))
-//                .subscribe(new Subscriber<NewsEntity>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        mIHomeTabFragment.refreshComplete();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        mIHomeTabFragment.showError();
-//                    }
-//
-//                    @Override
-//                    public void onNext(NewsEntity newsEntity) {
-//                        mIHomeTabFragment.showNews(newsEntity);
-//                    }
-//                });
-//
-//    }
 
     @Override
     public void getNews(String id) {
@@ -186,11 +166,17 @@ public class HomeFragmentPresenterImp implements HomeFragmentPresenter {
     }
 
 
+    /**
+     * 网络获取Category
+     */
     @Override
     public void getCategory() {
-
         mApiHomeService.getCategory(mRequestParam.getParams())
-                .compose(RxUtil.rxSchedulerHelper(mFragment))
+                .compose(mFragment.bindUntilEvent(FragmentEvent.DETACH))
+                .subscribeOn(Schedulers.io())
+                //存储Category到数据库
+                .doOnNext(categoryEntity -> mDbUtils.saveCategory(categoryEntity.list))
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<CategoryEntity>() {
                     @Override
                     public void onCompleted() {
@@ -203,8 +189,20 @@ public class HomeFragmentPresenterImp implements HomeFragmentPresenter {
 
                     @Override
                     public void onNext(CategoryEntity categoryEntity) {
-                        ((IHomeFragment)mFragment).showCategory(categoryEntity);
+                        ((IHomeFragment)mFragment).showCategory(categoryEntity.list);
                     }
                 });
     }
+
+    /**
+     * 数据库获取分类
+     */
+    public void loadCategoryFromDb() {
+        Observable.just(1).compose(mFragment.bindUntilEvent(FragmentEvent.DETACH))
+                .subscribeOn(Schedulers.io())
+                .map(integer -> mDbUtils.getCategory())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(((IHomeFragment)mFragment)::showCategory);
+    }
+
 }

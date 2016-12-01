@@ -1,5 +1,6 @@
 package com.example.administrator.mvp.model.entity;
 
+import com.example.administrator.mvp.model.greendao.News;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

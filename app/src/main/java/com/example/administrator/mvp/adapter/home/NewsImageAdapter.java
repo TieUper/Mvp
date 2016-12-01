@@ -8,9 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.example.administrator.mvp.R;
-import com.example.administrator.mvp.common.callback.OnListItemClickListener;
 import com.example.administrator.mvp.common.utils.ImageLoader;
-import com.example.administrator.mvp.model.entity.News;
+import com.example.administrator.mvp.model.greendao.News;
 
 import java.util.ArrayList;
 
@@ -18,7 +17,6 @@ public class NewsImageAdapter extends BaseAdapter {
     private ArrayList<String> iamgelist = new ArrayList<String>();  //保存图片URL
     private Context context;
     private News mNews;
-    private OnListItemClickListener mListener;
     private int mPostion;
 
     public NewsImageAdapter(Context context) {
@@ -30,21 +28,9 @@ public class NewsImageAdapter extends BaseAdapter {
         this.context = context;
         mNews = news;
         //将图片放入集合中
-        iamgelist.add(mNews.preview.body);
-        iamgelist.add(mNews.preview.body1);
-        iamgelist.add(mNews.preview.body2);
-
-    }
-
-    public NewsImageAdapter(Context context, News news, int postion, OnListItemClickListener listener) {
-        this.context = context;
-        mNews = news;
-        this.mPostion = postion;
-        this.mListener = listener;
-        //将图片放入集合中
-        iamgelist.add(mNews.preview.body);
-        iamgelist.add(mNews.preview.body1);
-        iamgelist.add(mNews.preview.body2);
+        iamgelist.add(mNews.getPreview().getBody());
+        iamgelist.add(mNews.getPreview().getBody1());
+        iamgelist.add(mNews.getPreview().getBody2());
 
     }
 

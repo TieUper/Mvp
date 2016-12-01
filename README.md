@@ -4,3 +4,4 @@
 2. Retrofit + RxJava网络访问
 3. Fragmentation进行Fragment管理
 4. 夜间模式切换
+5. ormlite数据库greendao进行缓存

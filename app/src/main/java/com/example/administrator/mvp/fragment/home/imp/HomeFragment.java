@@ -8,8 +8,7 @@ import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.common.base.BaseFragment;
 import com.example.administrator.mvp.common.injector.component.FragmentComponent;
 import com.example.administrator.mvp.fragment.home.IHomeFragment;
-import com.example.administrator.mvp.model.entity.Category;
-import com.example.administrator.mvp.model.entity.CategoryEntity;
+import com.example.administrator.mvp.model.greendao.Category;
 import com.example.administrator.mvp.presenter.fragment.imp.HomeFragmentPresenterImp;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -17,6 +16,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -37,6 +37,8 @@ public class HomeFragment extends BaseFragment implements IHomeFragment, ViewPag
     @Inject
     HomeFragmentPresenterImp mPresenter;
 
+    private ArrayList<Category> mCategories = new ArrayList<>();
+
     @Override
     public void inject(FragmentComponent fragmentComponent) {
         fragmentComponent.inject(this);
@@ -44,6 +46,9 @@ public class HomeFragment extends BaseFragment implements IHomeFragment, ViewPag
 
     @Override
     protected void initUI() {
+        //数据库加载
+        mPresenter.loadCategoryFromDb();
+        //网络加载
         mPresenter.getCategory();
     }
 
@@ -59,11 +64,19 @@ public class HomeFragment extends BaseFragment implements IHomeFragment, ViewPag
 
 
     @Override
-    public void showCategory(CategoryEntity categoryEntity) {
-        ArrayList<Category> list = categoryEntity.list;
+    public void showCategory(List<Category> list) {
+        //空 不加载
+        if(list.size() == 0) {
+            return;
+        }
+        //数据库数据
+        if( mCategories.size() == list.size() && mCategories.containsAll(list) ){
+            return;
+        }
+        mCategories.addAll(list);
         FragmentPagerItems.Creator creator = FragmentPagerItems.with(getActivity());
-        for (int i = 0; i < list.size(); i++) {
-            Category category = list.get(i);
+        for (int i = 0; i < mCategories.size(); i++) {
+            Category category = mCategories.get(i);
             creator.add(category.getCategory(), HomeTabFragment.class, new Bundler().putLong("id", category.getID()).get());
         }
         //得到一个集合
