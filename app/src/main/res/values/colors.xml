@@ -37,4 +37,6 @@
 
     <color name="settingbg_night">#0F1010</color>
     <color name="settingbg_day">#EEEEEE</color>
+    <color name="settingtext_day">#757575</color>
+    <color name="settingtext_night">#6B6D72</color>
 </resources>

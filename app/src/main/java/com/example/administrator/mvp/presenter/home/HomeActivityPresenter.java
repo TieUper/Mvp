@@ -7,6 +7,10 @@ import com.example.administrator.mvp.presenter.IPresenter;
  */
 public interface HomeActivityPresenter extends IPresenter {
 
-    void getCategory();
+    /**
+     * 获取新闻详情
+     * @param newsId
+     */
+    void getNewsDetail(String newsId);
 
 }

@@ -19,6 +19,5 @@ public class NewsAdapter  extends MultiItemTypeAdapter<News>{
         addItemViewDelegate(new ImageItemDelagate());
         addItemViewDelegate(new ThreeImageItemDelagate());
         addItemViewDelegate(new SmallImageItemDelagate());
-
     }
 }

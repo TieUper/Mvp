@@ -18,7 +18,14 @@
         <item name="clockBackground">@android:color/white</item>
         <item name="clockTextColor">@android:color/black</item>
         <item name="settingBgColor">#EEEEEE</item>
+        <item name="settingTextColor">@color/settingtext_day</item>
         <item name="cardBgColor">#ffffff</item>
+        <item name="icon_cache">@mipmap/ic_cache</item>
+        <item name="icon_clear">@mipmap/ic_clear</item>
+        <item name="icon_feedback">@mipmap/ic_feedback</item>
+        <item name="icon_image">@mipmap/ic_image</item>
+        <item name="icon_night">@mipmap/ic_night</item>
+        <item name="icon_update">@mipmap/ic_update</item>
     </style>
 
     <style name="TextAppearance.ExpandedTitle"
@@ -64,6 +71,14 @@
         <item name="clockTextColor">@android:color/black</item>
         <item name="settingBgColor">@color/settingbg_day</item>
         <item name="cardBgColor">#ffffff</item>
+        <item name="settingTextColor">@color/settingtext_day</item>
+
+        <item name="icon_cache">@mipmap/ic_cache</item>
+        <item name="icon_clear">@mipmap/ic_clear</item>
+        <item name="icon_feedback">@mipmap/ic_feedback</item>
+        <item name="icon_image">@mipmap/ic_image</item>
+        <item name="icon_night">@mipmap/ic_night</item>
+        <item name="icon_update">@mipmap/ic_update</item>
     </style>
 
     <!--夜间主题-->
@@ -75,5 +90,13 @@
         <item name="clockTextColor">@color/color8A9599</item>
         <item name="settingBgColor">@color/settingbg_night</item>
         <item name="cardBgColor">@color/color3F3F3F</item>
+        <item name="settingTextColor">@color/settingtext_night</item>
+
+        <item name="icon_cache">@mipmap/ic_cache_night</item>
+        <item name="icon_clear">@mipmap/ic_clear_night</item>
+        <item name="icon_feedback">@mipmap/ic_feedback_night</item>
+        <item name="icon_image">@mipmap/ic_image_night</item>
+        <item name="icon_night">@mipmap/ic_night_night</item>
+        <item name="icon_update">@mipmap/ic_update_night</item>
     </style>
 </resources>

@@ -54,7 +54,8 @@ public class DbUtils {
             return;
         }else{
             CategoryDao categoryDao = mDaoSession.getCategoryDao();
-            categoryDao.insertOrReplaceInTx(list);
+            categoryDao.deleteAll();
+            categoryDao.insertInTx(list);
         }
     }
 
@@ -81,9 +82,12 @@ public class DbUtils {
             for (News news : list) {
                 news.setCategoryId(categoryId);
                 newsDao.insertOrReplace(news);
-                Preview preview = news.getPreview();
-                preview.setNewsID(news.getNewsID());
-                previewDao.insertOrReplace(preview);
+                Preview unique = previewDao.queryBuilder().where(PreviewDao.Properties.NewsID.eq(news.getNewsID())).unique();
+                if(unique == null) {
+                    Preview preview = news.getPreview();
+                    preview.setNewsID(news.getNewsID());
+                    previewDao.insertOrReplace(preview);
+                }
             }
         }
     }
@@ -96,7 +100,7 @@ public class DbUtils {
     public NewsEntity getNews(Long categoryId) {
         NewsDao newsDao = mDaoSession.getNewsDao();
         PreviewDao previewDao = mDaoSession.getPreviewDao();
-        List<News> list = newsDao.queryBuilder().where(NewsDao.Properties.CategoryId.eq(categoryId)).orderDesc(NewsDao.Properties.ReleseDate)
+        List<News> list = newsDao.queryBuilder().where(NewsDao.Properties.CategoryId.eq(categoryId))
                 .limit(20).list();
         for(News news : list){
             Preview preview = previewDao.queryBuilder().where(PreviewDao.Properties.NewsID.eq(news.getNewsID())).unique();

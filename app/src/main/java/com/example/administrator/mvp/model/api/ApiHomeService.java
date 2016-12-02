@@ -1,6 +1,7 @@
 package com.example.administrator.mvp.model.api;
 
 import com.example.administrator.mvp.model.entity.CategoryEntity;
+import com.example.administrator.mvp.model.entity.NewsDetail;
 import com.example.administrator.mvp.model.entity.NewsEntity;
 
 import java.util.Map;
@@ -29,4 +30,10 @@ public interface ApiHomeService {
      */
     @POST("/Api/AppRequest/News")
     Observable<NewsEntity> getNews(@Body Map<String,String> param);
+
+    /**
+     * 获取新闻详情
+     */
+    @POST("/api/AppRequest/GetNewsDetail")
+    Observable<NewsDetail> getNewsDetail(@Body Map<String,String> param);
 }

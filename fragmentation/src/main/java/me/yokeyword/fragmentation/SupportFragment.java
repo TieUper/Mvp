@@ -20,13 +20,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
-import me.yokeyword.fragmentation.helper.internal.AnimatorHelper;
-import me.yokeyword.fragmentation.helper.internal.DebounceAnimListener;
-import me.yokeyword.fragmentation.helper.internal.LifecycleHelper;
-import me.yokeyword.fragmentation.helper.internal.OnEnterAnimEndListener;
-import me.yokeyword.fragmentation.helper.internal.OnFragmentDestoryViewListener;
-import me.yokeyword.fragmentation.helper.internal.ResultRecord;
-import me.yokeyword.fragmentation.helper.internal.TransactionRecord;
+import me.yokeyword.fragmentation.helper.AnimatorHelper;
+import me.yokeyword.fragmentation.helper.DebounceAnimListener;
+import me.yokeyword.fragmentation.helper.ResultRecord;
+import me.yokeyword.fragmentation.helper.OnEnterAnimEndListener;
+import me.yokeyword.fragmentation.helper.OnFragmentDestoryViewListener;
+import me.yokeyword.fragmentation.helper.TransactionRecord;
 
 /**
  * Created by YoKeyword on 16/1/22.
@@ -91,8 +90,6 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
         } else {
             throw new RuntimeException(activity.toString() + "must extends SupportActivity!");
         }
-
-        _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONATTACH, this);
     }
 
     @Override
@@ -115,7 +112,6 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
             mSaveInstanceState = savedInstanceState;
             mFragmentAnimator = savedInstanceState.getParcelable(Fragmentation.FRAGMENTATION_STATE_SAVE_ANIMATOR);
             mIsHidden = savedInstanceState.getBoolean(Fragmentation.FRAGMENTATION_STATE_SAVE_IS_HIDDEN);
-            mIsSupportVisible = savedInstanceState.getBoolean(Fragmentation.FRAGMENTATION_STATE_SAVE_IS_SUPPORT_VISIBLE);
             mInvisibleWhenLeave = savedInstanceState.getBoolean(Fragmentation.FRAGMENTATION_STATE_SAVE_IS_INVISIBLE_WHEN_LEAVE);
         }
 
@@ -125,8 +121,6 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
         }
 
         initAnim();
-
-        _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONCREATE, this, savedInstanceState);
     }
 
     private void processRestoreInstanceState(Bundle savedInstanceState) {
@@ -192,10 +186,7 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
         super.onSaveInstanceState(outState);
         outState.putParcelable(Fragmentation.FRAGMENTATION_STATE_SAVE_ANIMATOR, mFragmentAnimator);
         outState.putBoolean(Fragmentation.FRAGMENTATION_STATE_SAVE_IS_HIDDEN, isHidden());
-        outState.putBoolean(Fragmentation.FRAGMENTATION_STATE_SAVE_IS_SUPPORT_VISIBLE, mIsSupportVisible);
         outState.putBoolean(Fragmentation.FRAGMENTATION_STATE_SAVE_IS_INVISIBLE_WHEN_LEAVE, mInvisibleWhenLeave);
-
-        _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONSAVEINSTANCESTATE, this, outState);
     }
 
     @Override
@@ -221,15 +212,13 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
         if (!mInvisibleWhenLeave && !isHidden() && getUserVisibleHint()) {
             if ((getParentFragment() != null && !getParentFragment().isHidden()) || getParentFragment() == null) {
                 mNeedDispatch = false;
-                dispatchSupportVisible(true);
+                onSupportVisible();
             }
         }
 
         if (savedInstanceState != null) {
             mFixUserVisibleHintWhenRestore = true;
         }
-
-        _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONACTIVITYCREATED, this, savedInstanceState);
     }
 
     protected void initFragmentBackground(View view) {
@@ -264,11 +253,9 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
         if (!mIsFirstVisible) {
             if (!mIsSupportVisible && !mInvisibleWhenLeave && !isHidden() && getUserVisibleHint()) {
                 mNeedDispatch = false;
-                dispatchSupportVisible(true);
+                onSupportVisible();
             }
         }
-
-        _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONRESUME, this);
     }
 
     @Override
@@ -278,7 +265,7 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
         if (mIsSupportVisible && !isHidden() && getUserVisibleHint()) {
             mNeedDispatch = false;
             mInvisibleWhenLeave = false;
-            dispatchSupportVisible(false);
+            onSupportInvisible();
         } else {
             mInvisibleWhenLeave = true;
         }
@@ -286,19 +273,17 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
         if (mNeedHideSoft) {
             hideSoftInput();
         }
-
-        _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONPAUSE, this);
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (isResumed()) {
-            dispatchSupportVisible(!hidden);
-        }
-
-        if (_mActivity != null) {
-            _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONHIDDENCHANGED, this, hidden);
+            if (!hidden) {
+                onSupportVisible();
+            } else {
+                onSupportInvisible();
+            }
         }
     }
 
@@ -307,16 +292,14 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isResumed()) {
             if (!mIsSupportVisible && isVisibleToUser) {
-                dispatchSupportVisible(true);
+                onSupportVisible();
             } else if (mIsSupportVisible && !isVisibleToUser) {
                 if (!mFixUserVisibleHintWhenRestore) {
-                    dispatchSupportVisible(false);
+                    onSupportInvisible();
                 } else {
                     mFixUserVisibleHintWhenRestore = false;
                 }
             }
-
-            _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONSETUSERVISIBLEHINT, this, isVisibleToUser);
         }
     }
 
@@ -326,6 +309,13 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
      * Is the combination of  [onHiddenChanged() + onResume()/onPause() + setUserVisibleHint()]
      */
     public void onSupportVisible() {
+        mIsSupportVisible = true;
+        dispatchSupportVisible(true);
+
+        if (mIsFirstVisible) {
+            mIsFirstVisible = false;
+            onLazyInitView(mSaveInstanceState);
+        }
     }
 
     /**
@@ -334,6 +324,8 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
      * Is the combination of  [onHiddenChanged() + onResume()/onPause() + setUserVisibleHint()]
      */
     public void onSupportInvisible() {
+        mIsSupportVisible = false;
+        dispatchSupportVisible(false);
     }
 
     /**
@@ -351,43 +343,28 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
     }
 
-    /**
-     * 入栈动画 结束时,回调
-     */
-    protected void onEnterAnimationEnd(Bundle savedInstanceState) {
-    }
-
     private void dispatchSupportVisible(boolean visible) {
-        mIsSupportVisible = visible;
-
         if (!mNeedDispatch) {
             mNeedDispatch = true;
-        } else {
-            FragmentManager fragmentManager = getChildFragmentManager();
-            if (fragmentManager != null) {
-                List<Fragment> childFragments = fragmentManager.getFragments();
-                if (childFragments != null) {
-                    for (Fragment child : childFragments) {
-                        if (child instanceof SupportFragment && !child.isHidden() && child.getUserVisibleHint()) {
-                            ((SupportFragment) child).dispatchSupportVisible(visible);
-                        }
+            return;
+        }
+
+        FragmentManager fragmentManager = getChildFragmentManager();
+        if (fragmentManager == null) return;
+
+        List<Fragment> childFragments = fragmentManager.getFragments();
+        if (childFragments == null) return;
+
+        for (Fragment child : childFragments) {
+            if (child instanceof SupportFragment) {
+                if (!child.isHidden() && child.getUserVisibleHint()) {
+                    if (visible) {
+                        ((SupportFragment) child).onSupportVisible();
+                    } else {
+                        ((SupportFragment) child).onSupportInvisible();
                     }
                 }
             }
-        }
-
-        if (visible) {
-            if (mIsFirstVisible) {
-                mIsFirstVisible = false;
-                onLazyInitView(mSaveInstanceState);
-                _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONLAZYINITVIEW, this);
-            }
-
-            onSupportVisible();
-            _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONSUPPORTVISIBLE, this, true);
-        } else {
-            onSupportInvisible();
-            _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONSUPPORTINVISIBLE, this, false);
         }
     }
 
@@ -438,7 +415,6 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
             @Override
             public void run() {
                 onEnterAnimationEnd(savedInstanceState);
-                _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONENTERANIMATIONEND, SupportFragment.this, savedInstanceState);
             }
         });
     }
@@ -448,6 +424,12 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
      */
     protected FragmentAnimator onCreateFragmentAnimator() {
         return _mActivity.getFragmentAnimator();
+    }
+
+    /**
+     * 入栈动画 结束时,回调
+     */
+    protected void onEnterAnimationEnd(Bundle savedInstanceState) {
     }
 
     /**
@@ -520,11 +502,6 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
     @Override
     public void loadMultipleRootFragment(int containerId, int showPosition, SupportFragment... toFragments) {
         mFragmentation.loadMultipleRootTransaction(getChildFragmentManager(), containerId, showPosition, toFragments);
-    }
-
-    @Override
-    public void showHideFragment(SupportFragment showFragment) {
-        showHideFragment(showFragment, null);
     }
 
     @Override
@@ -784,47 +761,17 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONVIEWCREATED, SupportFragment.this, savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONSTART, SupportFragment.this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONSTOP, SupportFragment.this);
-    }
-
-    @Override
     public void onDestroyView() {
         if (mFragmentDestoryViewListener != null) {
             mFragmentDestoryViewListener.onDestoryView();
         }
-        mFragmentDestoryViewListener = null;
-
         super.onDestroyView();
-
-        _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONDESTROYVIEW, SupportFragment.this);
+        mFragmentDestoryViewListener = null;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mOnAnimEndListener = null;
-        _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONDESTROY, SupportFragment.this);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (_mActivity != null) {
-            _mActivity.dispatchFragmentLifecycle(LifecycleHelper.LIFECYLCE_ONDETACH, SupportFragment.this);
-        }
     }
 }

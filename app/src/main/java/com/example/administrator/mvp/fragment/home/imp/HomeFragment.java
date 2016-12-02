@@ -72,6 +72,8 @@ public class HomeFragment extends BaseFragment implements IHomeFragment, ViewPag
         //数据库数据
         if( mCategories.size() == list.size() && mCategories.containsAll(list) ){
             return;
+        }else {
+            mCategories.clear();
         }
         mCategories.addAll(list);
         FragmentPagerItems.Creator creator = FragmentPagerItems.with(getActivity());

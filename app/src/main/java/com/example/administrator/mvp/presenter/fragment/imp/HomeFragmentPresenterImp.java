@@ -83,7 +83,7 @@ public class HomeFragmentPresenterImp implements HomeFragmentPresenter {
                 .compose(mFragment.bindUntilEvent(FragmentEvent.DETACH))
                 .subscribeOn(Schedulers.io())
                 .map(newsEntity -> {
-                    mDbUtils.saveNews(newsEntity.list,Long.getLong(id));
+                    mDbUtils.saveNews(newsEntity.list,Long.parseLong(id));
                     return newsEntity;
                 })
                 .observeOn(AndroidSchedulers.mainThread())

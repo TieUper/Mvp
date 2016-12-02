@@ -40,14 +40,17 @@
                 android:padding="12dp">
 
                 <ImageView
+                    android:id="@+id/icon_cache"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_cache"/>
+                    android:src="?attr/icon_cache"/>
 
                 <TextView
+                    android:id="@+id/text_cache"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
+                    android:textColor="?attr/settingTextColor"
                     android:layout_weight="1"
                     android:text="@string/setting_cache"/>
 
@@ -70,14 +73,17 @@
                 android:padding="12dp">
 
                 <ImageView
+                    android:id="@+id/icon_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_image"/>
+                    android:src="?attr/icon_image"/>
 
                 <TextView
+                    android:id="@+id/text_image"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
+                    android:textColor="?attr/settingTextColor"
                     android:layout_weight="1"
                     android:text="@string/setting_image"/>
 
@@ -99,14 +105,17 @@
                 android:padding="12dp">
 
                 <ImageView
+                    android:id="@+id/icon_night"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_night"/>
+                    android:src="?attr/icon_night"/>
 
                 <TextView
+                    android:id="@+id/text_night"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
+                    android:textColor="?attr/settingTextColor"
                     android:layout_weight="1"
                     android:text="@string/setting_night"/>
 
@@ -154,13 +163,16 @@
                 android:padding="12dp">
 
                 <ImageView
+                    android:id="@+id/icon_feedback"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_feedback"/>
+                    android:src="?attr/icon_feedback"/>
 
                 <TextView
+                    android:id="@+id/text_feedback"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:textColor="?attr/settingTextColor"
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:text="@string/setting_feedback"/>
@@ -178,12 +190,15 @@
                 android:padding="12dp">
 
                 <ImageView
+                    android:id="@+id/icon_clear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_clear"/>
+                    android:src="?attr/icon_clear"/>
 
                 <TextView
+                    android:id="@+id/text_clear"
                     android:layout_width="0dp"
+                    android:textColor="?attr/settingTextColor"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
@@ -193,6 +208,7 @@
                     android:id="@+id/tv_setting_clear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="?attr/settingTextColor"
                     android:text="缓存大小：200kb"/>
             </LinearLayout>
 
@@ -208,11 +224,14 @@
                 android:padding="12dp">
 
                 <ImageView
+                    android:id="@+id/icon_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_update"/>
+                    android:src="?attr/icon_update"/>
 
                 <TextView
+                    android:id="@+id/text_update"
+                    android:textColor="?attr/settingTextColor"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
@@ -223,6 +242,7 @@
                     android:id="@+id/tv_setting_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="?attr/settingTextColor"
                     android:text="当前版本号：v1.0"/>
             </LinearLayout>
         </LinearLayout>

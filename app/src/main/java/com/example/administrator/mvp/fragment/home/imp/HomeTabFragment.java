@@ -1,9 +1,11 @@
 package com.example.administrator.mvp.fragment.home.imp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.adapter.home.NewsAdapter;
@@ -14,6 +16,7 @@ import com.example.administrator.mvp.fragment.home.IHomeTabFragment;
 import com.example.administrator.mvp.model.entity.NewsEntity;
 import com.example.administrator.mvp.model.greendao.News;
 import com.example.administrator.mvp.presenter.fragment.imp.HomeFragmentPresenterImp;
+import com.example.administrator.mvp.ui.detail.imp.NewsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +29,7 @@ import butterknife.ButterKnife;
 /**
  * Created by tie on 2016/9/12.
  */
-public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, XListView.IXListViewListener {
+public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, XListView.IXListViewListener, AdapterView.OnItemClickListener {
 
     @Bind(R.id.list_view)
     XListView mListView;
@@ -56,6 +59,10 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, X
 
         mAdapter = new NewsAdapter(getActivity(),mNewsList);
         mListView.setAdapter(mAdapter);
+
+        mPresenterImp.getNewFromDB(mId);
+
+        mListView.setOnItemClickListener(this);
     }
 
     private void refreshListener() {
@@ -118,27 +125,6 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, X
 
     @Override
     public void useNightMode(boolean isNight) {
-
-//        TypedValue background = new TypedValue();//背景色
-//        TypedValue textColor = new TypedValue();//字体颜色
-//        Resources.Theme theme = getActivity().getTheme();
-//        theme.resolveAttribute(R.attr.clockBackground, background, true);
-//        theme.resolveAttribute(R.attr.clockTextColor, textColor, true);
-//
-//        int childCount = mListView.getChildCount();
-//        Resources resources = getResources();
-//        for (int childIndex = 0; childIndex < childCount; childIndex++) {
-//            ViewGroup childView = (ViewGroup) mListView.getChildAt(childIndex);
-//            if(childView != null) {
-//                childView.setBackgroundResource(background.resourceId);
-//                TextView title = (TextView) childView.findViewById(R.id.tv_title);
-//                if(title != null)
-//                title.setTextColor(resources.getColor(textColor.resourceId));
-//                TextView time = (TextView) childView.findViewById(R.id.tv_time);
-//                if(time != null)
-//                time.setTextColor(resources.getColor(textColor.resourceId));
-//            }
-//        }
         mAdapter.notifyDataSetChanged();
     }
 
@@ -161,5 +147,11 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, X
     public void onLoadMore() {
         index++;
         mPresenterImp.getMoreNews(String.valueOf(mId),index);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        News item = mAdapter.getItem(i - 1);
+        startActivity(new Intent(getActivity(), NewsDetailActivity.class).putExtra("newsId",item.getNewsID()));
     }
 }

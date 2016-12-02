@@ -17,7 +17,7 @@ import me.yokeyword.fragmentation.SupportActivity;
 /**
  * Created by tie on 2016/9/6.
  */
-public abstract class BaseActivity extends SupportActivity{
+public abstract class BaseActivity extends SupportActivity {
 
     //加载Dialog
     private LoadingDialog mLoadingDialog;

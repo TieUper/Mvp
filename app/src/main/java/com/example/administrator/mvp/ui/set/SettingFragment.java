@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -62,6 +63,30 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
     TextView mTextOther;
     @Bind(R.id.ll_other)
     LinearLayout mCard2;
+    @Bind(R.id.icon_cache)
+    ImageView mIconCache;
+    @Bind(R.id.icon_image)
+    ImageView mIconImage;
+    @Bind(R.id.icon_night)
+    ImageView mIconNight;
+    @Bind(R.id.icon_feedback)
+    ImageView mIconFeedback;
+    @Bind(R.id.icon_clear)
+    ImageView mIconClear;
+    @Bind(R.id.icon_update)
+    ImageView mIconUpdate;
+    @Bind(R.id.text_cache)
+    TextView mTextCache;
+    @Bind(R.id.text_image)
+    TextView mTextImage;
+    @Bind(R.id.text_night)
+    TextView mTextNight;
+    @Bind(R.id.text_feedback)
+    TextView mTextFeedback;
+    @Bind(R.id.text_clear)
+    TextView mTextClear;
+    @Bind(R.id.text_update)
+    TextView mTextUpdate;
 
     private DayNightHelper mDayNightHelper;
 
@@ -154,11 +179,26 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
         TypedValue textColor = new TypedValue();//字体颜色
         TypedValue settingBg = new TypedValue();//settingBgColor
         TypedValue cardBg = new TypedValue();//CardViewBgColor
+        TypedValue icon_cache = new TypedValue();//icon_cache
+        TypedValue icon_clear = new TypedValue();//icon_clear
+        TypedValue icon_feedback = new TypedValue();//icon_feedback
+        TypedValue icon_image = new TypedValue();//icon_image
+        TypedValue icon_night = new TypedValue();//icon_night
+        TypedValue icon_update = new TypedValue();//icon_update
+        TypedValue settingtext = new TypedValue();//text
+
         Resources.Theme theme = getActivity().getTheme();
         theme.resolveAttribute(R.attr.clockBackground, background, true);
+        theme.resolveAttribute(R.attr.settingTextColor, settingtext, true);
         theme.resolveAttribute(R.attr.clockTextColor, textColor, true);
         theme.resolveAttribute(R.attr.settingBgColor, settingBg, true);
         theme.resolveAttribute(R.attr.cardBgColor, cardBg, true);
+        theme.resolveAttribute(R.attr.icon_cache, icon_cache, true);
+        theme.resolveAttribute(R.attr.icon_clear, icon_clear, true);
+        theme.resolveAttribute(R.attr.icon_feedback, icon_feedback, true);
+        theme.resolveAttribute(R.attr.icon_image, icon_image, true);
+        theme.resolveAttribute(R.attr.icon_night, icon_night, true);
+        theme.resolveAttribute(R.attr.icon_update, icon_update, true);
 
 
         mLL.setBackgroundResource(settingBg.resourceId);
@@ -166,6 +206,21 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
         Resources resources = getResources();
         mTextNormal.setTextColor(resources.getColor(textColor.resourceId));
         mTextOther.setTextColor(resources.getColor(textColor.resourceId));
+        mTextCache.setTextColor(resources.getColor(settingtext.resourceId));
+        mTextImage.setTextColor(resources.getColor(settingtext.resourceId));
+        mTextNight.setTextColor(resources.getColor(settingtext.resourceId));
+        mTextFeedback.setTextColor(resources.getColor(settingtext.resourceId));
+        mTextClear.setTextColor(resources.getColor(settingtext.resourceId));
+        mTextUpdate.setTextColor(resources.getColor(settingtext.resourceId));
+        tvSettingUpdate.setTextColor(resources.getColor(settingtext.resourceId));
+        tvSettingClear.setTextColor(resources.getColor(settingtext.resourceId));
+
+        mIconCache.setImageResource(icon_cache.resourceId);
+        mIconClear.setImageResource(icon_clear.resourceId);
+        mIconImage.setImageResource(icon_image.resourceId);
+        mIconFeedback.setImageResource(icon_feedback.resourceId);
+        mIconNight.setImageResource(icon_night.resourceId);
+        mIconUpdate.setImageResource(icon_update.resourceId);
 
         mCard1.setBackgroundResource(cardBg.resourceId);
         mCard2.setBackgroundResource(cardBg.resourceId);

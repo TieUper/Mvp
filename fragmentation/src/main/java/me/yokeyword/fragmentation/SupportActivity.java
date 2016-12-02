@@ -9,21 +9,14 @@ import android.view.MotionEvent;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
-import java.util.ArrayList;
-
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
-import me.yokeyword.fragmentation.helper.FragmentLifecycleCallbacks;
-import me.yokeyword.fragmentation.helper.internal.LifecycleHelper;
 
 /**
  * Created by YoKeyword on 16/1/22.
  */
 public class SupportActivity extends RxAppCompatActivity implements ISupport {
     private Fragmentation mFragmentation;
-
-    private LifecycleHelper mLifecycleHelper;
-    private ArrayList<FragmentLifecycleCallbacks> mFragmentLifecycleCallbacks;
 
     private FragmentAnimator mFragmentAnimator;
 
@@ -42,24 +35,6 @@ public class SupportActivity extends RxAppCompatActivity implements ISupport {
 
         mFragmentation = getFragmentation();
         mFragmentAnimator = onCreateFragmentAnimator();
-    }
-
-    public void registerFragmentLifecycleCallbacks(FragmentLifecycleCallbacks callback) {
-        synchronized (this) {
-            if (mFragmentLifecycleCallbacks == null) {
-                mFragmentLifecycleCallbacks = new ArrayList<>();
-                mLifecycleHelper = new LifecycleHelper(mFragmentLifecycleCallbacks);
-            }
-            mFragmentLifecycleCallbacks.add(callback);
-        }
-    }
-
-    public void unregisterFragmentLifecycleCallbacks(FragmentLifecycleCallbacks callback) {
-        synchronized (this) {
-            if (mFragmentLifecycleCallbacks != null) {
-                mFragmentLifecycleCallbacks.remove(callback);
-            }
-        }
     }
 
     Fragmentation getFragmentation() {
@@ -170,11 +145,6 @@ public class SupportActivity extends RxAppCompatActivity implements ISupport {
     }
 
     @Override
-    public void showHideFragment(SupportFragment showFragment) {
-        showHideFragment(showFragment, null);
-    }
-
-    @Override
     public void showHideFragment(SupportFragment showFragment, SupportFragment hideFragment) {
         mFragmentation.showHideFragment(getSupportFragmentManager(), showFragment, hideFragment);
     }
@@ -266,15 +236,6 @@ public class SupportActivity extends RxAppCompatActivity implements ISupport {
         mPopMultipleNoAnim = false;
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mFragmentLifecycleCallbacks != null) {
-            mFragmentLifecycleCallbacks.clear();
-        }
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
@@ -321,23 +282,5 @@ public class SupportActivity extends RxAppCompatActivity implements ISupport {
      */
     public void logFragmentStackHierarchy(String TAG) {
         mFragmentation.logFragmentRecords(TAG);
-    }
-
-    void dispatchFragmentLifecycle(int lifecycle, SupportFragment fragment) {
-        dispatchFragmentLifecycle(lifecycle, fragment, null);
-    }
-
-    void dispatchFragmentLifecycle(int lifecycle, SupportFragment fragment, Bundle bundle) {
-        dispatchFragmentLifecycle(lifecycle, fragment, bundle, false);
-    }
-
-    void dispatchFragmentLifecycle(int lifecycle, SupportFragment fragment, boolean visible) {
-        dispatchFragmentLifecycle(lifecycle, fragment, null, visible);
-    }
-
-    void dispatchFragmentLifecycle(int lifecycle, SupportFragment fragment, Bundle bundle, boolean visible) {
-        if (mLifecycleHelper != null) {
-            mLifecycleHelper.dispatchLifecycle(lifecycle, fragment, bundle, visible);
-        }
     }
 }

@@ -1,16 +1,16 @@
 package com.example.administrator.mvp.presenter.home.imp;
 
-import android.content.Context;
-
 import com.example.administrator.mvp.common.injector.module.PerActivity;
-import com.example.administrator.mvp.fragment.home.IHomeTabFragment;
+import com.example.administrator.mvp.common.utils.MySubscriber;
+import com.example.administrator.mvp.common.utils.RxUtil;
 import com.example.administrator.mvp.model.api.ApiHomeService;
+import com.example.administrator.mvp.model.entity.NewsDetail;
 import com.example.administrator.mvp.model.entity.RequestParam;
 import com.example.administrator.mvp.presenter.home.HomeActivityPresenter;
 import com.example.administrator.mvp.ui.IView;
+import com.example.administrator.mvp.ui.detail.INewsDetailView;
 import com.example.administrator.mvp.ui.home.IMainActivity;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-import com.trello.rxlifecycle.components.support.RxFragment;
 
 import javax.inject.Inject;
 
@@ -24,10 +24,7 @@ public class HomeActivityPresenterImp implements HomeActivityPresenter{
 
     private RxAppCompatActivity mActivity;
 
-    private Context mContext;
-    private RxFragment mFragment;
-
-    private IHomeTabFragment mIHomeTabFragment;
+    private INewsDetailView mNewsDetailView;
 
     @Inject
     RequestParam mRequestParam;
@@ -35,22 +32,23 @@ public class HomeActivityPresenterImp implements HomeActivityPresenter{
     @Inject
     ApiHomeService mApiHomeService;
 
-//    @Inject
-//    public HomeActivityPresenterImp(@ContextLife(value = "Activity") Context context, RxAppCompatActivity activity) {
-//        mActivity = activity;
-//        mContext = context;
-//    }
-
     @Inject
     public HomeActivityPresenterImp(RxAppCompatActivity activity) {
         mActivity = activity;
-        //registerEvent();
-        mIMainActivity = (IMainActivity) activity;
+        initView(activity);
+    }
+
+    private void initView(RxAppCompatActivity activity) {
+        if(activity instanceof INewsDetailView) {
+            mNewsDetailView = (INewsDetailView) activity;
+        }else if(activity instanceof IMainActivity){
+            mIMainActivity = (IMainActivity) activity;
+        }
+
     }
 
     @Override
     public void attachView(IView iView) {
-        //mIMainActivity  = (IMainActivity) iView;
     }
 
     @Override
@@ -58,57 +56,30 @@ public class HomeActivityPresenterImp implements HomeActivityPresenter{
 
     }
 
-
-
+    /**
+     * 获取新闻详情
+     * @param newsId 新闻id
+     */
     @Override
-    public void getCategory() {
-//
-//        mApiHomeService.getCategory(mRequestParam.getParams())
-//                .compose(RxUtil.rxSchedulerHelper(mActivity))
-//                .subscribe(new Subscriber<CategoryEntity>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        System.out.println(e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onNext(CategoryEntity categoryEntity) {
-//                        mIMainActivity.showCategory(categoryEntity);
-//                    }
-//                });
+    public void getNewsDetail(String newsId) {
+        mRequestParam.addParam("NewsID",newsId);
+        mApiHomeService.getNewsDetail(mRequestParam.getParams())
+                .compose(RxUtil.rxSchedulerHelper(mActivity))
+                .subscribe(new MySubscriber<NewsDetail>() {
+                    @Override
+                    public void onResult(NewsDetail newsDetail) {
+                        mNewsDetailView.showNewsDetail(newsDetail);
+                    }
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
     }
-
-
-//    public void registerEvent() {
-//
-//        RxBus.getDefault().toObservable(NightModeEvent.class)
-//                .compose(RxUtil.<NightModeEvent>rxSchedulerHelper(mActivity))
-//                .map(new Func1<NightModeEvent, Boolean>() {
-//                    @Override
-//                    public Boolean call(NightModeEvent nightModeEvent) {
-//                        return nightModeEvent.getNightMode();
-//                    }
-//                })
-//                .subscribe(new Observer<Boolean>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        mIMainActivity.showError("切换模式失败ヽ(≧Д≦)ノ");
-//                    }
-//
-//                    @Override
-//                    public void onNext(Boolean aBoolean) {
-//                        mIMainActivity.useNightMode(aBoolean);
-//                    }
-//                });
-//    }
 }

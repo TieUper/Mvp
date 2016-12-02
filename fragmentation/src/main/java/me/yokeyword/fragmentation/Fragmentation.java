@@ -19,10 +19,10 @@ import java.util.List;
 
 import me.yokeyword.fragmentation.debug.DebugFragmentRecord;
 import me.yokeyword.fragmentation.debug.DebugHierarchyViewContainer;
-import me.yokeyword.fragmentation.helper.internal.ResultRecord;
-import me.yokeyword.fragmentation.helper.internal.OnEnterAnimEndListener;
-import me.yokeyword.fragmentation.helper.internal.OnFragmentDestoryViewListener;
-import me.yokeyword.fragmentation.helper.internal.TransactionRecord;
+import me.yokeyword.fragmentation.helper.ResultRecord;
+import me.yokeyword.fragmentation.helper.OnEnterAnimEndListener;
+import me.yokeyword.fragmentation.helper.OnFragmentDestoryViewListener;
+import me.yokeyword.fragmentation.helper.TransactionRecord;
 
 
 /**
@@ -39,7 +39,6 @@ class Fragmentation {
 
     static final String FRAGMENTATION_STATE_SAVE_ANIMATOR = "fragmentation_state_save_animator";
     static final String FRAGMENTATION_STATE_SAVE_IS_HIDDEN = "fragmentation_state_save_status";
-    static final String FRAGMENTATION_STATE_SAVE_IS_SUPPORT_VISIBLE = "fragmentation_state_save_support_visible";
     static final String FRAGMENTATION_STATE_SAVE_IS_INVISIBLE_WHEN_LEAVE = "fragmentation_state_save_invisible_when_leave";
 
     private static final long BUFFER_TIME = 300L;
@@ -221,25 +220,11 @@ class Fragmentation {
     void showHideFragment(FragmentManager fragmentManager, SupportFragment showFragment, SupportFragment hideFragment) {
         if (showFragment == hideFragment) return;
 
-        FragmentTransaction ft = fragmentManager.beginTransaction().show(showFragment);
-
-        if (hideFragment == null) {
-            List<Fragment> fragmentList = fragmentManager.getFragments();
-            if (fragmentList != null) {
-                for (Fragment fragment : fragmentList) {
-                    if (fragment instanceof SupportFragment) {
-                        SupportFragment supportFragment = (SupportFragment) fragment;
-                        if (supportFragment != showFragment && supportFragment.isSupportVisible()) {
-                            System.out.println(supportFragment.getClass().getSimpleName());
-                            ft.hide(fragment);
-                        }
-                    }
-                }
-            }
-        } else {
-            ft.hide(hideFragment);
-        }
-        ft.commit();
+        // 如果show和hide的Fragment不是同一个
+        fragmentManager.beginTransaction()
+                .show(showFragment)
+                .hide(hideFragment)
+                .commit();
     }
 
     void start(FragmentManager fragmentManager, SupportFragment from, SupportFragment to, String toFragmentTag, View sharedElement, String name) {
