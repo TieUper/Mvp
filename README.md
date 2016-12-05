@@ -5,3 +5,4 @@
 3. Fragmentation进行Fragment管理
 4. 夜间模式切换
 5. ormlite数据库greendao进行缓存
+6. 添加DroidFix进行热修复
