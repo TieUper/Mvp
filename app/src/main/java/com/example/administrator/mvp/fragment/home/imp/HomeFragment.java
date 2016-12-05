@@ -75,6 +75,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragment, ViewPag
         }else {
             mCategories.clear();
         }
+        System.out.println("TTTTTTTTTTT" + mCategories);
         mCategories.addAll(list);
         FragmentPagerItems.Creator creator = FragmentPagerItems.with(getActivity());
         for (int i = 0; i < mCategories.size(); i++) {

@@ -71,7 +71,7 @@
 
 # 保持哪些类不被混淆
 -keep class com.example.administrator.mvp.model.entity.** { *; } #实体类不参与混淆
-#-keep class com.example.administrator.mvp.model.greendao.** { *; } #实体类不参与混淆
+-keep class com.example.administrator.mvp.model.greendao.** { *; } #实体类不参与混淆
 -keep class com.example.administrator.mvp.common.widget.** { *; } #自定义控件不参与混淆
 -keep public class * extends android.view
 -keep public class * extends android.app.Fragment

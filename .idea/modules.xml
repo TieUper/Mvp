@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/droidfix/AntilazyLoad/AntilazyLoad.iml" filepath="$PROJECT_DIR$/droidfix/AntilazyLoad/AntilazyLoad.iml" />
       <module fileurl="file://$PROJECT_DIR$/Mvp.iml" filepath="$PROJECT_DIR$/Mvp.iml" />
       <module fileurl="file://$PROJECT_DIR$/MvpEx.iml" filepath="$PROJECT_DIR$/MvpEx.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/daogenerator/daogenerator.iml" filepath="$PROJECT_DIR$/daogenerator/daogenerator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/droidfix/droidfix.iml" filepath="$PROJECT_DIR$/droidfix/droidfix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/droidfix/droidfixcore/droidfixcore.iml" filepath="$PROJECT_DIR$/droidfix/droidfixcore/droidfixcore.iml" />
       <module fileurl="file://$PROJECT_DIR$/fragmentation/fragmentation.iml" filepath="$PROJECT_DIR$/fragmentation/fragmentation.iml" />
     </modules>
   </component>

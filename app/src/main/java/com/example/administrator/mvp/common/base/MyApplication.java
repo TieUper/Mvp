@@ -25,6 +25,8 @@ public class MyApplication extends MultiDexApplication {
         initDagger2();
     }
 
+
+
     private void initDagger2() {
         mAppComponent = DaggerAppComponent.builder()
                 .apiModule(new ApiModule())
