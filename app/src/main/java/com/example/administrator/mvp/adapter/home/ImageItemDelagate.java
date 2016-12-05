@@ -42,14 +42,21 @@ public class ImageItemDelagate implements ItemViewDelegate<News> {
         //夜间模式
         TypedValue background = new TypedValue();//背景色
         TypedValue textColor = new TypedValue();//字体颜色
+        TypedValue textClick = new TypedValue();//字体颜色
         Resources.Theme theme = holder.getConvertView().getContext().getTheme();
         theme.resolveAttribute(R.attr.clockBackground, background, true);
         theme.resolveAttribute(R.attr.clockTextColor, textColor, true);
+        theme.resolveAttribute(R.attr.clickColor, textClick, true);
         Resources resources = holder.getConvertView().getContext().getResources();
         holder.getView(R.id.ll).setBackgroundResource(background.resourceId);
-        ((TextView)holder.getView(R.id.tv_title)).setTextColor(resources.getColor(textColor.resourceId));
-        ((TextView)holder.getView(R.id.tv_time)).setTextColor(resources.getColor(textColor.resourceId));
 
+        if(news.isClick()) {
+            ((TextView)holder.getView(R.id.tv_title)).setTextColor(resources.getColor(textClick.resourceId));
+            ((TextView)holder.getView(R.id.tv_time)).setTextColor(resources.getColor(textClick.resourceId));
+        }else {
+            ((TextView)holder.getView(R.id.tv_title)).setTextColor(resources.getColor(textColor.resourceId));
+            ((TextView)holder.getView(R.id.tv_time)).setTextColor(resources.getColor(textColor.resourceId));
+        }
         //标题
         holder.setText(R.id.tv_title, news.getTitle());
         //时间

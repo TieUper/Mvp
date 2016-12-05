@@ -20,12 +20,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
-import me.yokeyword.fragmentation.helper.AnimatorHelper;
-import me.yokeyword.fragmentation.helper.DebounceAnimListener;
-import me.yokeyword.fragmentation.helper.ResultRecord;
-import me.yokeyword.fragmentation.helper.OnEnterAnimEndListener;
-import me.yokeyword.fragmentation.helper.OnFragmentDestoryViewListener;
-import me.yokeyword.fragmentation.helper.TransactionRecord;
+import me.yokeyword.fragmentation.helper.internal.AnimatorHelper;
+import me.yokeyword.fragmentation.helper.internal.DebounceAnimListener;
+import me.yokeyword.fragmentation.helper.internal.OnEnterAnimEndListener;
+import me.yokeyword.fragmentation.helper.internal.OnFragmentDestoryViewListener;
+import me.yokeyword.fragmentation.helper.internal.ResultRecord;
+import me.yokeyword.fragmentation.helper.internal.TransactionRecord;
 
 /**
  * Created by YoKeyword on 16/1/22.

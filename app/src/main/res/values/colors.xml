@@ -23,6 +23,8 @@
     <color name="colorBackground">#EEEEEE</color>
     //字体
     <color name="text_color">#2C2C2C</color>
+    <color name="text_click_night">#666666</color>
+    <color name="text_click">#999999</color>
 
 
     <!--refresh-->

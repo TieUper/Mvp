@@ -5,6 +5,7 @@
     <attr name="settingBgColor" format="color"/>
     <attr name="settingTextColor" format="color"/>
     <attr name="cardBgColor" format="color"/>
+    <attr name="clickColor" format="color"/>
 
     <attr name="icon_cache" format="reference"/>
     <attr name="icon_clear" format="reference"/>

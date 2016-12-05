@@ -11,6 +11,7 @@ import com.example.administrator.mvp.R;
 import com.example.administrator.mvp.adapter.home.NewsAdapter;
 import com.example.administrator.mvp.common.base.BaseFragment;
 import com.example.administrator.mvp.common.injector.component.FragmentComponent;
+import com.example.administrator.mvp.common.utils.DbUtils;
 import com.example.administrator.mvp.common.widget.refresh.XListView;
 import com.example.administrator.mvp.fragment.home.IHomeTabFragment;
 import com.example.administrator.mvp.model.entity.NewsEntity;
@@ -36,6 +37,10 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, X
 
     @Inject
     HomeFragmentPresenterImp mPresenterImp;
+
+    @Inject
+    DbUtils mDbUtils;
+
     private long mId;
 
     private List<News> mNewsList = new ArrayList<>();
@@ -152,6 +157,15 @@ public class HomeTabFragment extends BaseFragment implements IHomeTabFragment, X
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         News item = mAdapter.getItem(i - 1);
+        item.setClick(true);
+        mDbUtils.updateNews(item.getNewsID());
         startActivity(new Intent(getActivity(), NewsDetailActivity.class).putExtra("newsId",item.getNewsID()));
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
     }
 }

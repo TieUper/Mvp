@@ -13,7 +13,7 @@ public class News {
     private String Title;
     private String ReleseDate;
     private String TopicID;
-    private boolean isClick;
+    private boolean isClick = false;
 
     public boolean isClick() {
         return isClick;

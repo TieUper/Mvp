@@ -81,12 +81,15 @@ public class DbUtils {
             PreviewDao previewDao = mDaoSession.getPreviewDao();
             for (News news : list) {
                 news.setCategoryId(categoryId);
-                newsDao.insertOrReplace(news);
-                Preview unique = previewDao.queryBuilder().where(PreviewDao.Properties.NewsID.eq(news.getNewsID())).unique();
-                if(unique == null) {
-                    Preview preview = news.getPreview();
-                    preview.setNewsID(news.getNewsID());
-                    previewDao.insertOrReplace(preview);
+                News unique1 = newsDao.queryBuilder().where(NewsDao.Properties.NewsID.eq(news.getNewsID())).unique();
+                if(unique1 == null) {
+                    newsDao.insert(news);
+                    Preview unique = previewDao.queryBuilder().where(PreviewDao.Properties.NewsID.eq(news.getNewsID())).unique();
+                    if (unique == null) {
+                        Preview preview = news.getPreview();
+                        preview.setNewsID(news.getNewsID());
+                        previewDao.insertOrReplace(preview);
+                    }
                 }
             }
         }
@@ -111,5 +114,15 @@ public class DbUtils {
         return newsEntity;
     }
 
+    /**
+     * 保存已读未读
+     * @param newsId
+     */
+    public void updateNews(String newsId) {
+        NewsDao newsDao = mDaoSession.getNewsDao();
+        News unique = newsDao.queryBuilder().where(NewsDao.Properties.NewsID.eq(newsId)).unique();
+        unique.setClick(true);
+        newsDao.update(unique);
+    }
 
 }
