@@ -2,6 +2,7 @@ package com.example.administrator.mvp.common.injector.component;
 
 import com.example.administrator.mvp.common.injector.module.FragmentModule;
 import com.example.administrator.mvp.common.injector.module.PerFragment;
+import com.example.administrator.mvp.fragment.SecondFragment;
 import com.example.administrator.mvp.fragment.home.imp.HomeFragment;
 import com.example.administrator.mvp.fragment.home.imp.HomeTabFragment;
 import com.example.administrator.mvp.fragment.home.imp.RefreshFrgment;
@@ -23,4 +24,6 @@ public interface FragmentComponent {
     void inject(HomeFragment homeFragment);
 
     void inject(SettingFragment settingFragment);
+
+    void inject(SecondFragment secondFragment);
 }

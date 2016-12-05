@@ -17,6 +17,7 @@ import com.example.administrator.mvp.common.injector.component.ActivityComponent
 import com.example.administrator.mvp.common.utils.Constants;
 import com.example.administrator.mvp.common.utils.DayNightHelper;
 import com.example.administrator.mvp.common.utils.SharedPreferenceUtil;
+import com.example.administrator.mvp.fragment.SecondFragment;
 import com.example.administrator.mvp.fragment.home.imp.HomeFragment;
 import com.example.administrator.mvp.presenter.home.imp.HomeActivityPresenterImp;
 import com.example.administrator.mvp.ui.home.IMainActivity;
@@ -57,6 +58,7 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
 
     private SMSBroadcastReceiver mSMSBroadcastReceiver;
     private static final String ACTION = "android.provider.Telephony.SMS_RECEIVED";
+    private SecondFragment mSecondFragment;
 
 
     @Override
@@ -75,6 +77,7 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
 
         mHomeFragment = new HomeFragment();
         mSettingFragment = new SettingFragment();
+        mSecondFragment = SecondFragment.newInstance("1","2");
 
         init();
 
@@ -106,13 +109,14 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         mDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mLastItem = mNavigation.getMenu().findItem(R.id.drawer_zhihu);
-        loadMultipleRootFragment(R.id.fl_main_content, 0, mHomeFragment, mSettingFragment);
+        loadMultipleRootFragment(R.id.fl_main_content, 0, mHomeFragment, mSettingFragment,mSecondFragment);
         mNavigation.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.drawer_zhihu:
                     showFragment = Constants.TYPE_MAIN;
                     break;
                 case R.id.drawer_gank:
+                    showFragment = Constants.TYPE_GANK;
                     break;
                 case R.id.drawer_wechat:
                     break;
@@ -188,6 +192,8 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
         switch (item) {
             case Constants.TYPE_MAIN:
                 return mHomeFragment;
+            case Constants.TYPE_GANK:
+                return mSecondFragment;
             case Constants.TYPE_SETTING:
                 return mSettingFragment;
         }

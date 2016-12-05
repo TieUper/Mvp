@@ -5,6 +5,7 @@ import com.example.administrator.mvp.common.injector.module.ApiModule;
 import com.example.administrator.mvp.common.injector.module.AppModule;
 import com.example.administrator.mvp.common.utils.DbUtils;
 import com.example.administrator.mvp.common.utils.ImageLoader;
+import com.example.administrator.mvp.common.utils.PackageUtils;
 import com.example.administrator.mvp.common.widget.refresh.MyRefreshUtils;
 import com.example.administrator.mvp.model.api.ApiHomeService;
 import com.example.administrator.mvp.model.api.ApiZhihuService;
@@ -37,4 +38,7 @@ public interface AppComponent {
 
     //数据库工具类
     DbUtils getDbUtils();
+
+    //包管理工具
+    PackageUtils getPackageUtils();
 }
