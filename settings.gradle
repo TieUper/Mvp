@@ -1,1 +1,1 @@
-include ':app', ':daogenerator', ':fragmentation', ':droidfix:droidfixcore', ':droidfix:AntilazyLoad'
+include ':app', ':daogenerator', ':fragmentation', ':droidfix:droidfixcore', ':droidfix:AntilazyLoad', ':sharelb'

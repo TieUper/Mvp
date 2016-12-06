@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/droidfix/droidfix.iml" filepath="$PROJECT_DIR$/droidfix/droidfix.iml" />
       <module fileurl="file://$PROJECT_DIR$/droidfix/droidfixcore/droidfixcore.iml" filepath="$PROJECT_DIR$/droidfix/droidfixcore/droidfixcore.iml" />
       <module fileurl="file://$PROJECT_DIR$/fragmentation/fragmentation.iml" filepath="$PROJECT_DIR$/fragmentation/fragmentation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sharelb/sharelb.iml" filepath="$PROJECT_DIR$/sharelb/sharelb.iml" />
     </modules>
   </component>
 </project>

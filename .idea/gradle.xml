@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/droidfix/AntilazyLoad" />
             <option value="$PROJECT_DIR$/droidfix/droidfixcore" />
             <option value="$PROJECT_DIR$/fragmentation" />
+            <option value="$PROJECT_DIR$/sharelb" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
