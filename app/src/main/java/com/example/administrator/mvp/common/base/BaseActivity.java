@@ -11,6 +11,7 @@ import com.example.administrator.mvp.common.injector.component.DaggerActivityCom
 import com.example.administrator.mvp.common.injector.module.ActivityModule;
 import com.example.administrator.mvp.common.utils.DayNightHelper;
 import com.example.administrator.mvp.common.widget.LoadingDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -123,5 +124,14 @@ public abstract class BaseActivity extends SupportActivity {
         if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

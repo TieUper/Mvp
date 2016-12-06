@@ -1,14 +1,18 @@
 package com.example.administrator.mvp.common.injector.module;
 
+import com.example.administrator.mvp.common.base.MyApplication;
 import com.example.administrator.mvp.common.interceptor.RequestParamInterceptor;
 import com.example.administrator.mvp.common.utils.ImageLoader;
 import com.example.administrator.mvp.model.api.ApiHomeService;
 import com.example.administrator.mvp.model.api.ApiZhihuService;
 
+import java.io.File;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -25,14 +29,26 @@ public class ApiModule {
 
     private final Retrofit homeRetrofit;
 
-    public ApiModule() {
+
+    public ApiModule(MyApplication myApplication) {
+        //原生Log日志拦截
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
+        //自定义日志拦截
+        //LoggingInterceptor interceptor = new LoggingInterceptor();
+
+        //设置cache
+        File cacheFile = new File(myApplication.getCacheDir(), "Cache");
+          Cache cache = new Cache(cacheFile, 1024 * 1024 * 10);
+
+        //请求参数拦截
         RequestParamInterceptor requestParamInterceptor = new RequestParamInterceptor();
+
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .cache(cache)
                 .addNetworkInterceptor(requestParamInterceptor)
                 .build();
 

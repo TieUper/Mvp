@@ -29,7 +29,7 @@ public class MyApplication extends MultiDexApplication {
 
     private void initDagger2() {
         mAppComponent = DaggerAppComponent.builder()
-                .apiModule(new ApiModule())
+                .apiModule(new ApiModule(this))
                 .appModule(new AppModule(this))
                 .build();
         mAppComponent.inject(this);

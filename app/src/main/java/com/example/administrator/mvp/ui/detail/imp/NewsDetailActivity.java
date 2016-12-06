@@ -3,6 +3,7 @@ package com.example.administrator.mvp.ui.detail.imp;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,9 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 新闻详情界面
+ */
 public class NewsDetailActivity extends BaseActivity implements INewsDetailView {
 
     @Inject
@@ -53,10 +57,25 @@ public class NewsDetailActivity extends BaseActivity implements INewsDetailView 
         ButterKnife.bind(this);
 
         setToolBar(viewToolbar,"");
+        //webview
+        initWebview();
         mNewsId = getIntent().getStringExtra("newsId");
         mViewLoading.start();
 
         mPresenterImp.getNewsDetail(mNewsId);
+    }
+
+    private void initWebview() {
+        mWvDetailContent.getSettings().setJavaScriptEnabled(true);//启用js
+        mWvDetailContent.getSettings().setBlockNetworkImage(false);//解决图片不显示
+
+        mWvDetailContent.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mViewLoading.stop();
+            }
+        });
     }
 
     @Override
@@ -74,7 +93,6 @@ public class NewsDetailActivity extends BaseActivity implements INewsDetailView 
 
         NewsDetail.Content content = news.NewsInfo;
 
-        mViewLoading.stop();
         //背景图片
         mImageLoader.load(this,content.ShareImg,mDetailBarImage);
         //标题

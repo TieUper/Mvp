@@ -30,12 +30,13 @@ package io.github.bunnyblue.droidfix.classcomputer.proguard;
 /**
  * Created by BunnyBlue on 11/11/15.
  */
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import io.github.bunnyblue.droidfix.classcomputer.classes.ClassObject;
-import org.apache.commons.io.FileUtils;
 
 
 

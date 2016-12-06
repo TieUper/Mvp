@@ -30,21 +30,20 @@ package io.github.bunnyblue.droidfix.classcomputer.proguard;
 /**
  * Created by BunnyBlue on 11/11/15.
  */
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-
-
 import java.util.List;
 
 import io.github.bunnyblue.droidfix.classcomputer.cache.Configure;
 import io.github.bunnyblue.droidfix.classcomputer.cache.HashUtil;
 import io.github.bunnyblue.droidfix.classcomputer.classes.ClassObject;
 import io.github.bunnyblue.droidfix.classcomputer.gradleImpl.GradleImpl15;
-import org.apache.commons.io.FileUtils;
 
 
 public class MappingMapper {

@@ -11,7 +11,6 @@ import okhttp3.Response;
 
 /**
  * 请求参数 拦截器
- * Created by wutong on 2016/3/8 0008.
  */
 public class RequestParamInterceptor implements Interceptor {
     private static final String TAG = "RequestParamInterceptor";

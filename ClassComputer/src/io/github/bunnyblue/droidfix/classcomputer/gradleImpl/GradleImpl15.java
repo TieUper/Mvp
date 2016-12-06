@@ -27,9 +27,6 @@
 
 package io.github.bunnyblue.droidfix.classcomputer.gradleImpl;
 
-import io.github.bunnyblue.droidfix.classcomputer.cache.Configure;
-import io.github.bunnyblue.droidfix.classcomputer.classes.ClassInject;
-import io.github.bunnyblue.droidfix.classcomputer.proguard.MappingMapper;
 import org.apache.commons.io.FileUtils;
 import org.zeroturnaround.zip.ZipUtil;
 
@@ -37,6 +34,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+
+import io.github.bunnyblue.droidfix.classcomputer.cache.Configure;
+import io.github.bunnyblue.droidfix.classcomputer.classes.ClassInject;
+import io.github.bunnyblue.droidfix.classcomputer.proguard.MappingMapper;
 
 /**
  * Created by BunnyBlue on 11/12/15.

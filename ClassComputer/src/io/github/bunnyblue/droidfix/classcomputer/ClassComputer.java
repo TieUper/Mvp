@@ -28,19 +28,18 @@
 package io.github.bunnyblue.droidfix.classcomputer;
 
 import com.android.dx.command.Main;
-import io.github.bunnyblue.droidfix.classcomputer.cache.Configure;
-import io.github.bunnyblue.droidfix.classcomputer.classes.ClassInject;
-import io.github.bunnyblue.droidfix.classcomputer.classes.ClassObject;
-import io.github.bunnyblue.droidfix.classcomputer.proguard.MappingMapper;
+
 import org.apache.commons.io.FileUtils;
-import org.zeroturnaround.zip.ZipEntrySource;
 import org.zeroturnaround.zip.ZipUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.zip.ZipEntry;
+
+import io.github.bunnyblue.droidfix.classcomputer.cache.Configure;
+import io.github.bunnyblue.droidfix.classcomputer.classes.ClassInject;
+import io.github.bunnyblue.droidfix.classcomputer.classes.ClassObject;
+import io.github.bunnyblue.droidfix.classcomputer.proguard.MappingMapper;
 
 /**
  * Created by BunnyBlue on 11/10/15.
