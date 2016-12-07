@@ -75,7 +75,7 @@ public class DbUtils {
      */
     public void saveNews(List<News> list,Long categoryId) {
         if (list.size() == 0) {
-            return;
+            return ;
         }else{
             NewsDao newsDao = mDaoSession.getNewsDao();
             PreviewDao previewDao = mDaoSession.getPreviewDao();
@@ -90,6 +90,8 @@ public class DbUtils {
                         preview.setNewsID(news.getNewsID());
                         previewDao.insertOrReplace(preview);
                     }
+                }else {
+                    news.setIsClick(unique1.getIsClick());
                 }
             }
         }
@@ -104,7 +106,7 @@ public class DbUtils {
         NewsDao newsDao = mDaoSession.getNewsDao();
         PreviewDao previewDao = mDaoSession.getPreviewDao();
         List<News> list = newsDao.queryBuilder().where(NewsDao.Properties.CategoryId.eq(categoryId))
-                .limit(20).list();
+                .limit(20).orderDesc(NewsDao.Properties.ReleseDate).list();
         for(News news : list){
             Preview preview = previewDao.queryBuilder().where(PreviewDao.Properties.NewsID.eq(news.getNewsID())).unique();
             news.setPreview(preview);

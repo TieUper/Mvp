@@ -273,4 +273,5 @@ dependencies {
     compile 'com.github.zhaokaiqiang.klog:library:1.6.0'
     //Umeng
     compile 'com.umeng.analytics:analytics:latest.integration'
+    compile project(':sharelb')
 }

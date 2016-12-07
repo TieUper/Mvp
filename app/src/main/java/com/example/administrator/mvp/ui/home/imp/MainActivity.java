@@ -182,12 +182,6 @@ public class MainActivity extends BaseActivity implements IMainActivity, ViewPag
 
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     private SupportFragment getTargetFragment(int item) {
         switch (item) {
             case Constants.TYPE_MAIN:

@@ -83,7 +83,7 @@ public class HomeFragmentPresenterImp implements HomeFragmentPresenter {
                 .compose(mFragment.bindUntilEvent(FragmentEvent.DETACH))
                 .subscribeOn(Schedulers.io())
                 .map(newsEntity -> {
-                    mDbUtils.saveNews(newsEntity.list,Long.parseLong(id));
+                    mDbUtils.saveNews(newsEntity.list, Long.parseLong(id));
                     return newsEntity;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -114,7 +114,13 @@ public class HomeFragmentPresenterImp implements HomeFragmentPresenter {
                 .addParam("InCircle", "0")
                 .getParams();
         mApiHomeService.getNews(params)
-                .compose(RxUtil.rxSchedulerHelper(mFragment))
+                .compose(mFragment.bindUntilEvent(FragmentEvent.DETACH))
+                .subscribeOn(Schedulers.io())
+                .map(newsEntity -> {
+                    mDbUtils.saveNews(newsEntity.list, Long.parseLong(id));
+                    return newsEntity;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<NewsEntity>() {
                     @Override
                     public void onCompleted() {
